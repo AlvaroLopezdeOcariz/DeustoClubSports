@@ -19,9 +19,9 @@ public class VentanaPrincipal extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel pNorte, pCentro;
+	private JPanel pNorte, pCentro, pNorteIzq, pSuperior;
 	private JLabel lblPrueba, lblLogo;
-	private JButton btnInciarSesion, btnResgitrar;
+	private JButton btnInciarSesion, btnResgitrar, btnCafeteria;
 	
 	public VentanaPrincipal() {
 		super();
@@ -42,19 +42,28 @@ public class VentanaPrincipal extends JFrame {
 		}
 		setIconImage(img.getImage());
 		
-		//Instanciar
+		//Instanciar		
 		pNorte = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		pNorte.setBackground(Color.WHITE);
 		pCentro = new JPanel(new BorderLayout());
 		pCentro.setBackground(Color.WHITE);
+		pNorteIzq = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pNorteIzq.setBackground(Color.WHITE);
 		//lblPrueba = new JLabel("Bienvenidos");
 		btnInciarSesion = new JButton("Iniciar Sesión");
 		btnResgitrar = new JButton("Resgistrarse");
+		btnCafeteria = new JButton("Cafetería");
+		
+		pSuperior = new JPanel(new BorderLayout());
+		pSuperior.setBackground(Color.WHITE);
+		
+		pSuperior.add(pNorte, BorderLayout.EAST);
+		pSuperior.add(pNorteIzq, BorderLayout.WEST);
 		
 		//Añadir paneles
-		getContentPane().add(pNorte, BorderLayout.NORTH);
+		getContentPane().add(pSuperior, BorderLayout.NORTH);
 	    getContentPane().add(pCentro, BorderLayout.CENTER);
-	
+	    
 		//logo
 		ImageIcon logoIcon = null;
 		java.net.URL logoURL = getClass().getResource("/img/logo_DeustoClubSports.png");
@@ -73,6 +82,7 @@ public class VentanaPrincipal extends JFrame {
 		//pNorte.add(lblPrueba);
 		pNorte.add(btnInciarSesion);
 		pNorte.add(btnResgitrar);
+		pNorteIzq.add(btnCafeteria);
 		
 		
 		//listeners
@@ -116,6 +126,11 @@ public class VentanaPrincipal extends JFrame {
 		btnResgitrar.addActionListener((e)-> {
 			dispose(); 
 			new Registro();
+		});
+		
+		btnCafeteria.addActionListener((e)-> {
+			dispose(); 
+			new VentanaCafeteria();
 		});
 		
 		setVisible(true);
