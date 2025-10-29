@@ -1,7 +1,6 @@
 package Swing;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 
@@ -9,129 +8,76 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-public class VentanaPrincipal extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel pNorte, pCentro, pNorteIzq, pSuperior;
-	private JLabel lblPrueba, lblLogo;
-	private JButton btnInciarSesion, btnResgitrar, btnCafeteria;
+public class VentanaPrincipal extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
+	private JPanel pNorte, pCentro, pSur;
+	private JButton btnCafeteria, btnTienda, btnInstalaciones, btnVolver;
+	private JLabel lblImagen1, lblImagen2, lblImagen3;
 	public VentanaPrincipal() {
-		super();
 		
-		//Especificaciones de la ventana
+		//Propiedades de la Ventana
 		setBounds(400, 200, 800, 500);
-		setTitle("DeustoClubSports");
-		
-
 		
 		
-		ImageIcon img;
-		java.net.URL iconURL = getClass().getResource("/img/logo_DeustoClubSports.png");
-		if (iconURL != null) {
-			img = new ImageIcon(iconURL);
-		} else {
-			img = new ImageIcon("img/logo_DeustoClubSports.png");
-		}
-		setIconImage(img.getImage());
+		//Creación de componentes
+		pNorte = new JPanel(new BorderLayout(150, 30)); 
+		pCentro = new JPanel();
+		pSur = new JPanel();
 		
-		//Instanciar		
-		pNorte = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		pNorte.setBackground(Color.WHITE);
-		pCentro = new JPanel(new BorderLayout());
-		pCentro.setBackground(Color.WHITE);
-		pNorteIzq = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		pNorteIzq.setBackground(Color.WHITE);
-		//lblPrueba = new JLabel("Bienvenidos");
-		btnInciarSesion = new JButton("Iniciar Sesión");
-		btnResgitrar = new JButton("Resgistrarse");
 		btnCafeteria = new JButton("Cafetería");
-		
-		pSuperior = new JPanel(new BorderLayout());
-		pSuperior.setBackground(Color.WHITE);
-		
-		pSuperior.add(pNorte, BorderLayout.EAST);
-		pSuperior.add(pNorteIzq, BorderLayout.WEST);
-		
-		//Añadir paneles
-		getContentPane().add(pSuperior, BorderLayout.NORTH);
-	    getContentPane().add(pCentro, BorderLayout.CENTER);
-	    
-		//logo
-		ImageIcon logoIcon = null;
-		java.net.URL logoURL = getClass().getResource("/img/logo_DeustoClubSports.png");
-		if (logoURL != null) {
-			logoIcon = new ImageIcon(logoURL);
-		} else {
-			logoIcon = new ImageIcon("img/logo_DeustoClubSports.png");
-		}
-		
-		Image img1 = logoIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-		lblLogo = new JLabel(new ImageIcon(img1));
-		lblLogo.setHorizontalAlignment(JLabel.CENTER);
-		pCentro.add(lblLogo, BorderLayout.CENTER);
-		
-		//Añadir componentes
-		//pNorte.add(lblPrueba);
-		pNorte.add(btnInciarSesion);
-		pNorte.add(btnResgitrar);
-		pNorteIzq.add(btnCafeteria);
+		btnInstalaciones = new JButton("Instalaciones");
+		btnInstalaciones.setBounds(4,4,4,4);
+		btnTienda = new JButton("Tienda");
+		btnVolver = new JButton("Volver");
 		
 		
-		//listeners
-		btnInciarSesion.addActionListener((e) -> { 
-			
-			//Temporal porque no tenemos base de datos
-			JPanel panelInicio = new JPanel();
-		    JLabel labelUsuario = new JLabel("Usuario:");
-		    JTextField campoUsuario = new JTextField(10);
-		    JLabel labelPassword = new JLabel("Contraseña:");
-		    JPasswordField campoPassword = new JPasswordField(10);
-		    
-		    panelInicio.add(labelUsuario);
-		    panelInicio.add(campoUsuario);
-		    panelInicio.add(labelPassword);
-		    panelInicio.add(campoPassword);
-		    
-		    int resultado = JOptionPane.showConfirmDialog(null, panelInicio,
-		            "Iniciar Sesión",
-		            JOptionPane.OK_CANCEL_OPTION,
-		            JOptionPane.PLAIN_MESSAGE
-		        );
-		    	
-		    String usuarioValido = "Jenny";
-            String passwordValido = "Lover";
-            String usuario = campoUsuario.getText();
-            String password = new String(campoPassword.getPassword());
+        lblImagen1 = new JLabel();
+        lblImagen2 = new JLabel();
+        lblImagen3 = new JLabel();
+        
+       
+        ImageIcon imgOriginal1 = new ImageIcon("img/img1.jpg");
+        Image imgEscalada1 = imgOriginal1.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon img1 = new ImageIcon(imgEscalada1);
+        
+        ImageIcon imgOriginal2 = new ImageIcon("img/img2.jpg");
+        Image imgEscalada2 = imgOriginal2.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon img2 = new ImageIcon(imgEscalada2);
+        
+        ImageIcon imgOriginal3 = new ImageIcon("img/img3.jpg");
+        Image imgEscalada3 = imgOriginal3.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon img3 = new ImageIcon(imgEscalada3);
+        
+        lblImagen1.setIcon(img1);
+        lblImagen2.setIcon(img2);
+        lblImagen3.setIcon(img3);
 
-            if (resultado == JOptionPane.OK_OPTION) {
-                if (usuarioValido.equals(usuario) && passwordValido.equals(password)) {
-                    JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-		    
+		//Añadir 
+		pNorte.add(btnCafeteria, BorderLayout.WEST);       
+        pNorte.add(btnInstalaciones, BorderLayout.CENTER); 
+        pNorte.add(btnTienda, BorderLayout.EAST);          
+		
+		getContentPane().add(pNorte, BorderLayout.NORTH);
+		getContentPane().add(pCentro, BorderLayout.CENTER);
+		getContentPane().add(pSur, BorderLayout.SOUTH);
+		
+		pCentro.add(lblImagen1);
+		pCentro.add(lblImagen2);
+		pCentro.add(lblImagen3);
+		pSur.add(btnVolver);
+		
+		
+		//LISTENERS
+		btnInstalaciones.addActionListener((e) -> {
+			dispose();
+			new VentanaInstalaciones();
 			
 		});
 		
 		
-		btnResgitrar.addActionListener((e)-> {
-			dispose(); 
-			new Registro();
-		});
-		
-		btnCafeteria.addActionListener((e)-> {
-			dispose(); 
-			new VentanaCafeteria();
-		});
 		
 		setVisible(true);
 	}
