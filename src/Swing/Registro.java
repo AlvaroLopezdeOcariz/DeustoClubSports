@@ -124,9 +124,13 @@ public class Registro extends JFrame {
                 return;
             }
             
+            if (!correo.contains("@")) {
+                JOptionPane.showMessageDialog(this, "El correo debe contener un '@'", "Correo inválido", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             JOptionPane.showMessageDialog(null,
                 "Usuario registrado correctamente:\nNombre: " + nombre + "\nCorreo: " + correo);
-            
             
 
             dispose();

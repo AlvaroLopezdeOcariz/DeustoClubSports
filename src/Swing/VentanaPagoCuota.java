@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class VentanaPagoCuota extends JFrame {
     
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     private JPanel pCentro, pSur;
     private JLabel lblTipoSocio, lblFrecuencia, lblMetodoPago, lblTotalSimple;
     private JComboBox<String> cbTipoSocio, cbFrecuencia, cbMetodoPago;
@@ -32,16 +32,20 @@ public class VentanaPagoCuota extends JFrame {
     
     public VentanaPagoCuota() {
         super();
+        
+        //Propiedades de la ventana
         setTitle("Pago de Cuota");
         setBounds(350, 150, 450, 300);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
+        
+        //Creación de paneles
         pCentro = new JPanel(new GridLayout(5,2,10,10));
         pSur = new JPanel();
 
         getContentPane().add(pCentro, BorderLayout.CENTER);
         getContentPane().add(pSur, BorderLayout.SOUTH);
-
+        
+      //Creación de componentes
         //Tipo de socio
         lblTipoSocio = new JLabel("Tipo socio:", JLabel.RIGHT);
         cbTipoSocio = new JComboBox<>(new String[]{
@@ -66,12 +70,14 @@ public class VentanaPagoCuota extends JFrame {
         rbConEntrada = new JRadioButton("Sí (150€)");
         rbSinEntrada = new JRadioButton("No", true);
         bgEntrada = new ButtonGroup();
+        
+        //Añadir la cuota d eentrada
         bgEntrada.add(rbConEntrada);
         bgEntrada.add(rbSinEntrada);
         pEntrada.add(rbConEntrada);
         pEntrada.add(rbSinEntrada);
 
-        
+        //Metodo
         lblMetodoPago = new JLabel("Método pago:", JLabel.RIGHT);
         cbMetodoPago = new JComboBox<>(new String[]{
             "Tarjeta",
@@ -79,23 +85,27 @@ public class VentanaPagoCuota extends JFrame {
             "Domiciliación"
         });
 
-        
+        //Total
         lblTotalSimple = new JLabel("Total: 0.00€", JLabel.CENTER);
         lblTotalSimple.setFont(new Font("Arial", Font.BOLD, 20));
         lblTotalSimple.setForeground(new Color(0, 153, 0));
         pSur.add(lblTotalSimple);
 
-        
+        //Botones 
         btnPagar = new JButton("Pagar");
         btnCancelar = new JButton("Cancelar");
         pSur.add(btnPagar);
         pSur.add(btnCancelar);
 
-        
-        pCentro.add(lblTipoSocio); pCentro.add(cbTipoSocio);
-        pCentro.add(lblFrecuencia); pCentro.add(cbFrecuencia);
-        pCentro.add(lblEntrada); pCentro.add(pEntrada);
-        pCentro.add(lblMetodoPago); pCentro.add(cbMetodoPago);
+        //Añadir componentes al panel
+        pCentro.add(lblTipoSocio); 
+        pCentro.add(cbTipoSocio);
+        pCentro.add(lblFrecuencia); 
+        pCentro.add(cbFrecuencia);
+        pCentro.add(lblEntrada); 
+        pCentro.add(pEntrada);
+        pCentro.add(lblMetodoPago); 
+        pCentro.add(cbMetodoPago);
 
         
         cbTipoSocio.addActionListener(e -> actualizarTotalSimple());
