@@ -134,7 +134,7 @@ public class Registro extends JFrame {
             
 
             dispose();
-            new VentanaPrincipal();
+            new VentanaPagoCuota();
         });
 
         btnCancelar.addActionListener((e) -> {
