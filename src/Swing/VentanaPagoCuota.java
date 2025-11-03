@@ -33,7 +33,7 @@ public class VentanaPagoCuota extends JFrame {
     public VentanaPagoCuota() {
         super();
         setTitle("Pago de Cuota");
-        setBounds(400, 200, 800, 500);
+        setBounds(350, 150, 450, 300);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         pCentro = new JPanel(new GridLayout(5,2,10,10));
