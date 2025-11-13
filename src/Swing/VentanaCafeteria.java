@@ -9,7 +9,7 @@ public class VentanaCafeteria extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public void VentanaMenuCafeteria() {
-        setTitle("Menú - Cafetería DeustoClubSports");
+        setTitle("Cafetería DeustoClubSports");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 900);
         setLocationRelativeTo(null);
@@ -20,7 +20,7 @@ public class VentanaCafeteria extends JFrame {
         headerPanel.setBackground(new Color(60, 50, 40));
         headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        JLabel titulo = new JLabel("Menú - Cafetería DeustoClubSports", SwingConstants.LEFT);
+        JLabel titulo = new JLabel("Cafetería DeustoClubSports", SwingConstants.LEFT);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(new Font("Serif", Font.BOLD, 24));
 
