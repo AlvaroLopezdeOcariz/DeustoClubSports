@@ -95,7 +95,11 @@ public class VentanaPrincipal extends JFrame{
 			new VentanaInstalaciones();
 			
 		});
-		
+		btnTienda.addActionListener((e) -> {
+			dispose();
+			new VentanaTienda();
+			
+		});
 		
 		
 		setVisible(true);
