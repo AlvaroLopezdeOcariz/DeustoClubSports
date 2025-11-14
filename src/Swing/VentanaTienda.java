@@ -47,23 +47,25 @@ public class VentanaTienda extends JFrame {
         JComboBox<TipoDeporte> comboBox = new JComboBox<>(TipoDeporte.values());
         
         comboBox.addActionListener(e -> {
-			TipoDeporte seleccionado = (TipoDeporte) comboBox.getSelectedItem();
-			
-			if (seleccionado == TipoDeporte.TODOS) {
-				return; 
-			}
+            TipoDeporte seleccionado = (TipoDeporte) comboBox.getSelectedItem();
 
-			List<Productos> filtrados = new ArrayList<>();
-			for (Productos p : productos) {
-				if (p.getDeporte() == seleccionado) {
-					filtrados.add(p);
-				}
-			}
+            if (seleccionado == TipoDeporte.TODOS) {
+                modelo = new TablaProductosModelo(productos, header);
+                tablaProductos.setModel(modelo);
+                tablaProductos.repaint();
+            } else {
+                List<Productos> filtrados = new ArrayList<>();
+                for (Productos p : productos) {
+                    if (p.getDeporte() == seleccionado) {
+                        filtrados.add(p);
+                    }
+                }
+                modelo= new TablaProductosModelo(filtrados.toArray(new Productos[0]), header);
+                tablaProductos.setModel(modelo);
+                tablaProductos.repaint();
+            }
+        });
 
-			modelo= new TablaProductosModelo(filtrados.toArray(new Productos[0]), header);
-			tablaProductos.setModel(modelo);
-			tablaProductos.repaint();
-		});
         
         
         
@@ -88,6 +90,8 @@ public class VentanaTienda extends JFrame {
        
     }
 
- 
+    public static void main(String[] args) {
+		new VentanaTienda();
+	}
 }
 

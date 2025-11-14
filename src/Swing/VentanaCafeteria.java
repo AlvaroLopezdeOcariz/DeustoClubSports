@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Locale;
 
 public class VentanaCafeteria extends JFrame {
@@ -141,10 +143,20 @@ public class VentanaCafeteria extends JFrame {
         // Botón de pagar
         JButton btnPagar = new JButton("Pagar");
         btnPagar.addActionListener(e -> pagar());
-        JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        right.add(btnPagar);
-
-        p.add(right, BorderLayout.EAST);
+        JButton btnVolver = new JButton("Volver atrás");
+        btnVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VentanaInicio();
+				
+			}
+		});
+        JPanel btnRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        btnRight.add(btnPagar);
+        btnRight.add(btnVolver);
+        p.add(btnRight, BorderLayout.EAST);
         return p;
     }
 
