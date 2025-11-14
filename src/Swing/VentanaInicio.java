@@ -132,7 +132,7 @@ public class VentanaInicio extends JFrame {
 		
 		btnCafeteria.addActionListener((e)-> {
 			dispose(); 
-			new VentanaCafeteria();
+			new VentanaCafeteria().setVisible(true);
 		});
 		
 		setVisible(true);
