@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ public class VentanaTienda extends JFrame {
         JTable tablaProductos = new JTable(modelo);
         JScrollPane scrollPane = new JScrollPane(tablaProductos);
         JPanel tituloPanel = new JPanel();
+        JButton btnVolver = new JButton("Volver atrás");
         JComboBox<TipoDeporte> comboBox = new JComboBox<>(TipoDeporte.values());
         
         comboBox.addActionListener(e -> {
@@ -65,12 +67,19 @@ public class VentanaTienda extends JFrame {
         
         
         
-        
+        //Listener
+        btnVolver.addActionListener(e -> {
+            dispose();
+            new VentanaPrincipal();
+        });
         
         JLabel tituloLabel = new JLabel("Elige los productos por deporte: ", SwingConstants.CENTER);
         tituloPanel.setLayout(new FlowLayout());
         tituloPanel.add(tituloLabel);
         tituloPanel.add(comboBox);
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+        panelInferior.add(btnVolver);
+        this.add(panelInferior, BorderLayout.SOUTH);
         this.add(tituloPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
         setVisible(true);
