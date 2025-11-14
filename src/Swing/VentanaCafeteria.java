@@ -165,7 +165,14 @@ public class VentanaCafeteria extends JFrame {
             double precio = (Double) modeloCarrito.getValueAt(row, 2); // obtener precio
             modeloCarrito.setValueAt(cant * precio, row, 3); // actualizar subtotal
         } else {
-            modeloCarrito.addRow(new Object[]{seleccionado.getNombre(), 1, seleccionado.getNombre(), seleccionado.getNombre()}); // añadir nuevo producto
+        	double precio = seleccionado.getPrecio();
+        	modeloCarrito.addRow(new Object[]{
+        	    seleccionado.getNombre(),                 
+        	    Integer.valueOf(1),                       
+        	    Double.valueOf(precio),                   
+        	    Double.valueOf(precio)                    
+        	});
+
         }
         recalcularTotal(); // actualizar total
     }
