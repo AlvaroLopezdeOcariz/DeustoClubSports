@@ -7,7 +7,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,25 +40,41 @@ public class VentanaInstalaciones extends JFrame{
         // Título arriba
         JLabel titulo = new JLabel("Nuestras Instalaciones");
         titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 18f));
-        add(titulo, BorderLayout.NORTH);
+        
+        // Panel superior
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(titulo, BorderLayout.WEST);
+
+        JButton btnVolver = new JButton("Volver atrás");
+        btnVolver.addActionListener(e -> {
+            dispose();
+            new VentanaPrincipal().setVisible(true); // vuelvo a la ventana Principal
+        });
+
+        top.add(btnVolver, BorderLayout.EAST);
+
+        // Colocacion del Panel superior
+        add(top, BorderLayout.NORTH);
+
+
 
         // Centro: grid 3 por fila
         grid = new JPanel(new GridLayout(0, 3, 16, 16));
         add(new JScrollPane(grid), BorderLayout.CENTER);
 
         // Rellena el grid con tarjetas
-        addCard("Pista de Fútbol 7", "img/instalaciones/futbol.jpg");
-        addCard("Piscina Climatizada", "img/instalaciones/piscina.png");
-        addCard("Pista de Pádel", "img/instalaciones/padel.png");
-        addCard("Gimnasio", "img/instalaciones/gimnasio.png");
-        addCard("Sala Multifunción", "img/instalaciones/sala.png");
-        addCard("Pista de Baloncesto", null); 
-        addCard("Pista de Fútbol 7", "img/instalaciones/football-pitch-320100_640.jpg");
-        addCard("Piscina Climatizada", "img/instalaciones/piscina.png");
-        addCard("Pista de Pádel", "img/instalaciones/padel.png");
-        addCard("Gimnasio", "img/instalaciones/gimnasio.png");
-        addCard("Sala Multifunción", "img/instalaciones/sala.png");
-        addCard("Pista de Baloncesto", null); 
+        addCard("Cancha de Fútbol 7", "img/instalaciones/futbol.jpg");
+        addCard("Piscina Cubierta", "img/instalaciones/piscina.jpg");
+        addCard("Pista de Pádel", "img/instalaciones/padel.jpg");
+        addCard("Gimnasio", "img/instalaciones/gimnasio.jpg");
+        addCard("Pista de Tenis", "img/instalaciones/tenis.jpg");
+        addCard("Pista de Baloncesto", "img/instalaciones/baloncesto.jpg"); 
+        addCard("Pista de VolleyBall", "img/instalaciones/volley.jpg");
+        addCard("Mesa de PingPong", "img/instalaciones/pingpong.jpg");
+        addCard("Ring de Boxeo", "img/instalaciones/boxeo.jpg");
+        addCard("Pista de Atletismo", "img/instalaciones/atletismo.jpg");
+        addCard("Pista de Hockey", "img/instalaciones/hockey.jpg");
+        addCard("Campo de Golf", "img/instalaciones/golf.jpg");
     }
 	
 	// Añade una tarjeta al grid

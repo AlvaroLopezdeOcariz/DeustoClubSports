@@ -9,5 +9,9 @@ public enum TipoDeporte {
 	BOXEO,
 	RUNNING,
 	HOCKEY,
+	PADEL,
+	PISCINA,
+	GIMNASIO,
+	GOLF,
 	TODOS
 }
