@@ -92,7 +92,7 @@ public class VentanaPrincipal extends JFrame{
 		//LISTENERS
 		btnInstalaciones.addActionListener((e) -> {
 			dispose();
-			new VentanaInstalaciones();
+			new VentanaInstalaciones().setVisible(true);
 			
 		});
 		btnTienda.addActionListener((e) -> {
