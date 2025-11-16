@@ -44,7 +44,7 @@ public class VentanaInstalaciones extends JFrame{
         add(new JScrollPane(grid), BorderLayout.CENTER);
 
         // Rellena el grid con tarjetas
-        addCard("Pista de Fútbol 7", "img/instalaciones/football-pitch-320100_640.jpg");
+        addCard("Pista de Fútbol 7", "img/instalaciones/futbol.jpg");
         addCard("Piscina Climatizada", "img/instalaciones/piscina.png");
         addCard("Pista de Pádel", "img/instalaciones/padel.png");
         addCard("Gimnasio", "img/instalaciones/gimnasio.png");
