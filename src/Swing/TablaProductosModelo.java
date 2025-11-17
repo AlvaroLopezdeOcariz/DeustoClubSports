@@ -31,11 +31,12 @@ public class TablaProductosModelo extends javax.swing.table.AbstractTableModel {
 		Productos p= productos[rowIndex];
 		switch (columnIndex) {
 		case 0:
-			return p.getNombre();
+			return p.getDeporte();
 			case 1:
-				return p.getPrecio();
+				return p.getNombre();
+			
 				case 2:
-					return p.getDeporte();
+					return p.getPrecio() + " €";
 		}
 		return "";
 	}

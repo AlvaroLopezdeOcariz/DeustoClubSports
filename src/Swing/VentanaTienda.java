@@ -6,10 +6,12 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -45,7 +47,7 @@ public class VentanaTienda extends JFrame {
                 new Productos("Zapatillas de fútbol", 69.99, TipoDeporte.FUTBOL)
         };
 
-        String[] header = {"Producto", "Precio", "TipoDeporte"};
+        String[] header = {"TipoDeporte","Producto", "Precio", };
 
         
         setBounds(400, 200, 800, 400);
@@ -59,7 +61,7 @@ public class VentanaTienda extends JFrame {
         JTable tablaProductos = new JTable(modelo);
 
      
-        tablaProductos.setRowHeight(25);
+        tablaProductos.setRowHeight(35);
         tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 13)); // Fuente guay, cambiable a gusto
         tablaProductos.setShowGrid(true);            
         tablaProductos.setGridColor(Color.BLACK);    
@@ -76,7 +78,11 @@ public class VentanaTienda extends JFrame {
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         for (int i = 0; i < tablaProductos.getColumnCount(); i++) {
-            tablaProductos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            if (i == 0) {
+                tablaProductos.getColumnModel().getColumn(i).setCellRenderer(new TipoDeporteRenderer());
+            } else {
+                tablaProductos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
         }
 
         JScrollPane scrollPane = new JScrollPane(tablaProductos);
@@ -115,7 +121,8 @@ public class VentanaTienda extends JFrame {
 
         tituloPanel.add(tituloLabel);
         tituloPanel.add(comboBox);
-
+        
+        
         
         JButton btnVolver = new JButton("Volver atrás");
         btnVolver.setFocusPainted(false);
@@ -158,6 +165,47 @@ public class VentanaTienda extends JFrame {
             g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
+    
+    
+    
+    class TipoDeporteRenderer extends DefaultTableCellRenderer {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+
+            JLabel label = (JLabel) super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+
+            if (value instanceof TipoDeporte) {
+                TipoDeporte deporte = (TipoDeporte) value;
+
+                String ruta = "img/deportes/" + deporte.name().toLowerCase() + ".png";
+                ImageIcon icon = cargarIcono(ruta, 30, 30);
+
+                label.setIcon(icon);
+                label.setHorizontalTextPosition(SwingConstants.RIGHT); // icono izquierda, texto derecha
+                label.setIconTextGap(8); // separación icono-texto
+            }
+
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            return label;
+        }
+    }
+    private ImageIcon cargarIcono(String ruta, int w, int h) {
+        try {
+            ImageIcon original = new ImageIcon(ruta);
+            if (original.getIconWidth() <= 0) return null;
+            Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            return new ImageIcon(img);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     public static void main(String[] args) {
         new VentanaTienda();
