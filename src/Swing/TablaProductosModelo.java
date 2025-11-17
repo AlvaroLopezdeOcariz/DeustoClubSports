@@ -40,6 +40,10 @@ public class TablaProductosModelo extends javax.swing.table.AbstractTableModel {
 		}
 		return "";
 	}
+	public Productos getProductoAt(int fila) {
+	    return productos[fila];
+	}
+
 
 	@Override
 	public String getColumnName(int column) {

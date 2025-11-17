@@ -138,6 +138,24 @@ public class VentanaTienda extends JFrame {
             dispose();
             new VentanaPrincipal();
         });
+        
+        tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2) { // doble click
+                    int fila = tablaProductos.getSelectedRow();
+                    if (fila != -1) {
+
+                        // Recuperar el producto seleccionado desde el modelo
+                        Productos producto = modelo.getProductoAt(fila);
+
+                        // Abrir ventana de compra
+                        new VentanaCompraProducto(VentanaTienda.this, producto).setVisible(true);
+                    }
+                }
+            }
+        });
+
 
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         panelInferior.setBackground(colorFondo);
