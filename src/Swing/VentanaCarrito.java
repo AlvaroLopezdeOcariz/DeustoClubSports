@@ -35,6 +35,9 @@ public class VentanaCarrito extends JFrame {
                     item.getSubtotal()   // precio total según cantidad
             });
         }
+        if (carrito.getItems().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "El carrito está vacío.");
+		}
 
         JTable tablaCarrito = new JTable(modeloTabla);
         tablaCarrito.setRowHeight(30);
@@ -79,7 +82,7 @@ public class VentanaCarrito extends JFrame {
    
         btnVolver.addActionListener(e -> {dispose();
         		
-        		new VentanaTienda().setVisible(true);
+        		new VentanaPrincipal().setVisible(true);
         		
     });
 

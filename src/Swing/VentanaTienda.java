@@ -151,6 +151,7 @@ public class VentanaTienda extends JFrame {
                                              
                         
                         // Abrir ventana de compra
+                        dispose();
                         new VentanaCompraProducto(VentanaTienda.this, producto).setVisible(true);
                     }
                 }
