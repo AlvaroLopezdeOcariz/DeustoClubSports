@@ -108,6 +108,8 @@ public class VentanaInicio extends JFrame {
 		    	
 		    String usuarioValido = "Jenny";
             String passwordValido = "Lover";
+            String adminValido = "Admin";
+            String passwordAdminValido = "Admin123";
             String usuario = campoUsuario.getText();
             String password = new String(campoPassword.getPassword());
 
@@ -116,6 +118,12 @@ public class VentanaInicio extends JFrame {
                     JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente");
                     dispose();
                     new VentanaPrincipal();
+                } else if (usuario.isEmpty() || password.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (adminValido.equals(usuario) && passwordAdminValido.equals(password)) {
+					JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente como administrador");
+					dispose();
+					new VentanaAdministrador();
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
