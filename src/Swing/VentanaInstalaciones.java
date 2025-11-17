@@ -202,7 +202,7 @@ public class VentanaInstalaciones extends JFrame{
                         "Reserva de " + inst.getDeporte() + " en " + inst.getNombre() + "\n(Pendiente de implementar)");
                 
                 dispose();
-                new VentanaReserva();
+                new VentanaReserva().setVisible(true);
             });
             
             // Listener Cerrar
