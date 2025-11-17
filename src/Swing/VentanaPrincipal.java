@@ -18,7 +18,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel pNorte, pCentro, pSur;
-	private JButton btnCafeteria, btnTienda, btnInstalaciones;
+	private JButton btnCafeteria, btnTienda, btnInstalaciones,btnCarrito;
 	private JLabel lblImagen1, lblImagen2, lblImagen3;
 	public VentanaPrincipal() {
 		
@@ -27,9 +27,9 @@ public class VentanaPrincipal extends JFrame{
 		setTitle("DeustoClubSports");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
+		Carrito carrito = Carrito.getInstance();
 		// Panel Norte 
-		pNorte = new JPanel(new BorderLayout(150, 30));
+		pNorte = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
 		pNorte.setBorder(new EmptyBorder(10,10,10,10));
 		
 		btnCafeteria = new JButton("CAFETERÍA");
@@ -48,6 +48,11 @@ public class VentanaPrincipal extends JFrame{
 		btnTienda.setBackground(new Color(230, 230, 230));
 		btnTienda.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		
+		
+		btnCarrito= new JButton("CARRITO");
+		btnCarrito.setFocusPainted(false);
+		btnCarrito.setBackground(new Color(230, 230, 230));
+		btnCarrito.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		// Panel Centro
 		pCentro = new JPanel();
 		
@@ -76,9 +81,10 @@ public class VentanaPrincipal extends JFrame{
         pSur = new JPanel();
 
 		//Añadir 
-		pNorte.add(btnCafeteria, BorderLayout.WEST);       
-        pNorte.add(btnInstalaciones, BorderLayout.CENTER); 
-        pNorte.add(btnTienda, BorderLayout.EAST);          
+		pNorte.add(btnCafeteria);
+		pNorte.add(btnCarrito);
+        pNorte.add(btnInstalaciones); 
+        pNorte.add(btnTienda);          
 		
 		getContentPane().add(pNorte, BorderLayout.NORTH);
 		getContentPane().add(pCentro, BorderLayout.CENTER);
@@ -100,7 +106,11 @@ public class VentanaPrincipal extends JFrame{
 			new VentanaTienda();
 			
 		});
-		
+		btnCarrito.addActionListener((e) -> {
+			dispose();
+			new VentanaCarrito(carrito);
+			
+		});
 		
 		setVisible(true);
 	}

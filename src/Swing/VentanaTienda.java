@@ -37,19 +37,19 @@ public class VentanaTienda extends JFrame {
 
         
         Productos[] productos = {
-                new Productos("Balón de fútbol", 29.99, TipoDeporte.FUTBOL),
-                new Productos("Raqueta de tenis", 89.99, TipoDeporte.TENIS),
-                new Productos("Camiseta de baloncesto", 49.99, TipoDeporte.BALONCESTO),
-                new Productos("Zapatillas de running", 79.99, TipoDeporte.RUNNING),
-                new Productos("Guantes de boxeo", 39.99, TipoDeporte.BOXEO),
-                new Productos("Palo de hockey", 59.99, TipoDeporte.HOCKEY),
-                new Productos("Red de voleibol", 24.99, TipoDeporte.VOLEIBOL),
-                new Productos("Zapatillas de fútbol", 69.99, TipoDeporte.FUTBOL)
+                new Productos("Balón de fútbol", 29.99, TipoDeporte.FUTBOL, 100),
+                new Productos("Raqueta de tenis", 89.99, TipoDeporte.TENIS, 50),
+                new Productos("Camiseta de baloncesto", 49.99, TipoDeporte.BALONCESTO, 75),
+                new Productos("Zapatillas de running", 79.99, TipoDeporte.RUNNING, 120),
+                new Productos("Guantes de boxeo", 39.99, TipoDeporte.BOXEO, 60),
+                new Productos("Palo de hockey", 59.99, TipoDeporte.HOCKEY, 40),
+                new Productos("Red de voleibol", 24.99, TipoDeporte.VOLEIBOL, 30),
+                new Productos("Zapatillas de fútbol", 69.99, TipoDeporte.FUTBOL, 80),
         };
 
-        String[] header = {"TipoDeporte","Producto", "Precio", };
+        String[] header = {"TipoDeporte","Producto", "Precio", "Stock" };
 
-        
+      
         setBounds(400, 200, 800, 400);
         setTitle("DeustoClubSports");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,7 +148,8 @@ public class VentanaTienda extends JFrame {
 
                         // Recuperar el producto seleccionado desde el modelo
                         Productos producto = modelo.getProductoAt(fila);
-
+                                             
+                        
                         // Abrir ventana de compra
                         new VentanaCompraProducto(VentanaTienda.this, producto).setVisible(true);
                     }

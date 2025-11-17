@@ -5,14 +5,20 @@ public class Productos {
 	private String nombre;
 	private double precio;
 	private TipoDeporte deporte;
-
-	public Productos(String nombre, double precio, TipoDeporte deporte) {
+	private int stock;
+	public Productos(String nombre, double precio, TipoDeporte deporte, int stock) {
 		this.nombre = nombre;
 		this.precio = precio;
 		this.deporte = deporte;
+		this.stock = stock;
 	}
 	
-	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 	public String getNombre() {
 		return nombre;
 	}

@@ -37,6 +37,8 @@ public class TablaProductosModelo extends javax.swing.table.AbstractTableModel {
 			
 				case 2:
 					return p.getPrecio() + " €";
+					case 3:
+						return p.getStock();
 		}
 		return "";
 	}

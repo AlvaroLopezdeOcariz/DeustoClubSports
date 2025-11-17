@@ -69,7 +69,17 @@ public class VentanaCompraProducto extends JFrame {
 	                            "\nPrecio total: " + String.format("%.2f", total) + " €"
 	            );
 
+	            
+	         
+	           int c= producto.getStock()-cantidad;
+	           producto.setStock(c);
+	            Carrito carrito = Carrito.getInstance();
+	        carrito.add(producto, cantidad);
+
+	            JOptionPane.showMessageDialog(this, "Producto añadido al carrito.");
 	            dispose();
+	           new VentanaCarrito(carrito).setVisible(true);
+	            
 	        });
 
 	        JButton btnCancelar = new JButton("Cancelar");
