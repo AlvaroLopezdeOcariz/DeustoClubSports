@@ -200,6 +200,9 @@ public class VentanaInstalaciones extends JFrame{
             btnReservar.addActionListener(e -> {
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Reserva de " + inst.getDeporte() + " en " + inst.getNombre() + "\n(Pendiente de implementar)");
+                
+                dispose();
+                new VentanaReserva();
             });
             
             // Listener Cerrar
