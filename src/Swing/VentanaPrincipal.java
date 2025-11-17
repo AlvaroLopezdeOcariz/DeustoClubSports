@@ -111,6 +111,11 @@ public class VentanaPrincipal extends JFrame{
 			new VentanaCarrito(carrito);
 			
 		});
+		btnCafeteria.addActionListener((e) -> {
+			dispose();
+			new VentanaCafeteria().setVisible(true);
+			
+		});
 		
 		setVisible(true);
 	}

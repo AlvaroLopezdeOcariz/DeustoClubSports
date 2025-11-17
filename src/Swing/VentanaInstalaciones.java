@@ -198,8 +198,7 @@ public class VentanaInstalaciones extends JFrame{
             
             // Listener Reservar -> pendiente de implementar
             btnReservar.addActionListener(e -> {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Reserva de " + inst.getDeporte() + " en " + inst.getNombre() + "\n(Pendiente de implementar)");
+                
                 
                 dispose();
                 new VentanaReserva().setVisible(true);
