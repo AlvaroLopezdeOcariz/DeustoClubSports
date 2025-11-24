@@ -24,6 +24,8 @@ import javax.swing.border.AbstractBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
+import BD.BD;
+
 public class VentanaTienda extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -36,16 +38,7 @@ public class VentanaTienda extends JFrame {
         Color colorTexto = new Color(40, 40, 40);
 
         
-        Productos[] productos = {
-                new Productos("Balón de fútbol", 29.99, TipoDeporte.FUTBOL, 100),
-                new Productos("Raqueta de tenis", 89.99, TipoDeporte.TENIS, 50),
-                new Productos("Camiseta de baloncesto", 49.99, TipoDeporte.BALONCESTO, 75),
-                new Productos("Zapatillas de running", 79.99, TipoDeporte.RUNNING, 120),
-                new Productos("Guantes de boxeo", 39.99, TipoDeporte.BOXEO, 60),
-                new Productos("Palo de hockey", 59.99, TipoDeporte.HOCKEY, 40),
-                new Productos("Red de voleibol", 24.99, TipoDeporte.VOLEIBOL, 30),
-                new Productos("Zapatillas de fútbol", 69.99, TipoDeporte.FUTBOL, 80),
-        };
+    	Productos[] productos = BD.obtenerProductos();
 
         String[] header = {"TipoDeporte","Producto", "Precio", "Stock" };
 
@@ -55,9 +48,9 @@ public class VentanaTienda extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         getContentPane().setBackground(colorFondo);
-
+        Productos[] ps= BD.obtenerProductos();
         
-        modelo = new TablaProductosModelo(productos, header);
+        modelo = new TablaProductosModelo(ps, header);
         JTable tablaProductos = new JTable(modelo);
 
      
@@ -228,6 +221,9 @@ public class VentanaTienda extends JFrame {
 
 
     public static void main(String[] args) {
+    	BD baseDatos= new BD();
+    	baseDatos.InicializarBD();
+    	baseDatos.insertarProductos();
         new VentanaTienda();
     }
 }

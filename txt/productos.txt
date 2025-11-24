@@ -1,0 +1,8 @@
+Balón de fútbol;29.99;FUTBOL;100
+Raqueta de tenis;89.99;TENIS;50
+Camiseta de baloncesto;49.99;BALONCESTO;75
+Zapatillas de running;79.99;RUNNING;120
+Guantes de boxeo;39.99;BOXEO;60
+Palo de hockey;59.99;HOCKEY;40
+Red de voleibol;24.99;VOLEIBOL;30
+Zapatillas de fútbol;69.99;FUTBOL;80

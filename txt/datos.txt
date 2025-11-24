@@ -1,0 +1,13 @@
+1;1;1;false
+a;a;a;true
+1234;1234;1234;true
+2;2;2;true
+f;f;f;false
+a;v;v;true
+n;n;n;false
+t;t;t;false
+j;j;j;false
+ll;ll;ll;false
+A;ander;1234;false
+A;A;A;false
+C;C;C;true
