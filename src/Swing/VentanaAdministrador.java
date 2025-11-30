@@ -2,6 +2,7 @@ package Swing;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -35,6 +36,8 @@ public class VentanaAdministrador extends JFrame {
     private CardLayout cardLayout;
 	private JPanel pNorte, pTablas, pRestock;
 	
+	private JButton btnVolver;
+	
 	//Tablas
     private JTable tablaProductos;
     private JTable tablaInscripciones;
@@ -54,9 +57,12 @@ public class VentanaAdministrador extends JFrame {
 		//Especificaciones de la ventana
 		setBounds(400, 200, 800, 500);
 		setTitle("Centro de Control");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		crearPanelNorte();
 		
 		//Creación de paneles
-		pNorte = new JPanel();
+		
 		getContentPane().add(pNorte, BorderLayout.NORTH);
 		
 		//Creación de componentes 
@@ -83,6 +89,19 @@ public class VentanaAdministrador extends JFrame {
 		
 		setVisible(true);
 	}
+	
+	private void crearPanelNorte() {
+        // FlowLayout.LEFT alinea el botón a la izquierda
+        pNorte = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
+        
+        btnVolver = new JButton("Volver atrás");
+        btnVolver.addActionListener(e -> {
+            dispose(); 
+            new VentanaPrincipal(); 
+        });
+        
+        pNorte.add(btnVolver);
+    }
 	
 	private void crearArbol() {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Registro de Actividad");
