@@ -21,7 +21,7 @@ import Swing.Usuario;
 
 public class BD {
 
-	private static final String DB_URL = "jdbc:sqlite:./Productos.db";
+	private static final String DB_URL = "jdbc:sqlite:./DeustoClubSports.db";
 	
 	 public void InicializarBD() {
 	        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS Productos ("
