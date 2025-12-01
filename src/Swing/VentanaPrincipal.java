@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import BD.BD;
+
 public class VentanaPrincipal extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
@@ -123,6 +125,7 @@ public class VentanaPrincipal extends JFrame{
 	
 	
 	public static void main(String[] args) {
+		
 		new VentanaPrincipal();
 	}
 }

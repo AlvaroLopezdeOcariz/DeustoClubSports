@@ -221,9 +221,7 @@ public class VentanaTienda extends JFrame {
 
 
     public static void main(String[] args) {
-    	BD baseDatos= new BD();
-    	baseDatos.InicializarBD();
-    	baseDatos.insertarProductos();
+    
         new VentanaTienda();
     }
 }

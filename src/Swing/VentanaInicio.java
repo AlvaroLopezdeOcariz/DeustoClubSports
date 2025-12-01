@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BD.BD;
+
 public class VentanaInicio extends JFrame {
 	/**
 	 * 
@@ -106,28 +108,33 @@ public class VentanaInicio extends JFrame {
 		            JOptionPane.PLAIN_MESSAGE
 		        );
 		    	
-		    String usuarioValido = "Jenny";
-            String passwordValido = "Lover";
-            String adminValido = "Admin";
-            String passwordAdminValido = "Admin123";
+		  
             String usuario = campoUsuario.getText();
             String password = new String(campoPassword.getPassword());
+            
+            String usuarioValido = BD.obtenerUsuario(usuario);
+            String passwordValido = BD.ContraseñaUsuario(password);
+            boolean esAdmin = BD.esAdministrador(usuario);
 
-            if (resultado == JOptionPane.OK_OPTION) {
-                if (usuarioValido.equals(usuario) && passwordValido.equals(password)) {
+            	if (resultado == JOptionPane.OK_OPTION) {
+            	if(esAdmin) {
+            							if (usuarioValido.equals(usuario) && passwordValido.equals(password)) {
+						JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente como administrador");
+						dispose();
+						new VentanaAdministrador();
+					} 
+            	}	
+            	else if (usuarioValido.equals(usuario) && passwordValido.equals(password)) {
                     JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente");
                     dispose();
                     new VentanaPrincipal();
                 } else if (usuario.isEmpty() || password.isEmpty()) {
 					JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (adminValido.equals(usuario) && passwordAdminValido.equals(password)) {
-					JOptionPane.showMessageDialog(this, "Se ha iniciado sesión correctamente como administrador");
-					dispose();
-					new VentanaAdministrador();
+                } 
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            }
+            
 		    
 			
 		});
@@ -147,6 +154,10 @@ public class VentanaInicio extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+		BD baseDatos= new BD();
+    	baseDatos.InicializarBD();
+    	baseDatos.insertarProductos();
+    	baseDatos.insertarUsuarios();
 		new VentanaInicio();
 	}
 }

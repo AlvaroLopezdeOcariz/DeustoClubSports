@@ -75,7 +75,7 @@ public class BD {
 	 
 	  public void insertarUsuarios() {
 	    	
-	    	File f= new File("src/UsuariosRegistrados.txt");
+	    	File f= new File("txt/usuarios.txt");
 	    	ArrayList<Usuario> listaUsuarios= new ArrayList<>();
 	    	if(!f.exists()) {
 	    		System.err.println("El archivo productos.txt no existe.");
@@ -240,7 +240,55 @@ public class BD {
   }
   	
 
-	  
+  public static String obtenerUsuario(String nombre) {
+	  	String query = "SELECT * FROM Usuarios WHERE nomUsuario=?";
+	  	try (Connection conexion = DriverManager.getConnection(DB_URL);
+	  			PreparedStatement pstmt = conexion.prepareStatement(query)){
+	  		
+	  		pstmt.setString(1, nombre);
+	  		
+	  		try (ResultSet rs = pstmt.executeQuery()) {
+	              if (rs.next()) {
+	                  return rs.getString("nombre"); // Devolver el nombre de usuario
+	              } else {
+	                  System.out.println("Usuario no encontrada.");
+	              }
+	          }
+	  		
+	  			
+	  		
+	  		
+	  	}catch (SQLException e) {
+	          e.printStackTrace();
+	      }
+	  	
+	  	return "";
+	  }
+	  	
+  public static String ContraseñaUsuario(String nombre) {
+	  	String query = "SELECT * FROM Usuarios WHERE nomUsuario=?";
+	  	try (Connection conexion = DriverManager.getConnection(DB_URL);
+	  			PreparedStatement pstmt = conexion.prepareStatement(query)){
+	  		
+	  		pstmt.setString(1, nombre);
+	  		
+	  		try (ResultSet rs = pstmt.executeQuery()) {
+	              if (rs.next()) {
+	                  return rs.getString("contrasenia"); // Devolver el ID de la actividad
+	              } else {
+	                  System.out.println("Usuario no encontrada.");
+	              }
+	          }
+	  		
+	  			
+	  		
+	  		
+	  	}catch (SQLException e) {
+	          e.printStackTrace();
+	      }
+	  	
+	  	return "";
+	  }
 	  
 	  public static  Productos[] obtenerProductos() {
 	    	ArrayList<Productos> lsProductos= new ArrayList<>();
@@ -267,5 +315,27 @@ public class BD {
 	       
 	    	
 	    }
-		    
+
+
+
+	  public static boolean esAdministrador(String usuario) {
+		  String query = "SELECT admin FROM Usuarios WHERE nomUsuario=?";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  			PreparedStatement pstmt = conexion.prepareStatement(query)){
+		  		
+		  		pstmt.setString(1, usuario);
+		  		
+		  		try (ResultSet rs = pstmt.executeQuery()) {
+		            if (rs.next()) {
+		                return rs.getBoolean("admin"); // Devolver si es administrador
+		            } else {
+		                System.out.println("Usuario no encontrado.");
+		            }
+		        }
+	  
+	  }catch (SQLException e) {
+		  e.printStackTrace();
+	  }
+		  return false;		 
+	  }
 }
