@@ -213,10 +213,19 @@ public class VentanaReserva extends JFrame {
                     "Precio: " + precio + " €\n" +
                     "Asistentes: " + spAsistentes.getValue();
 
-            JOptionPane.showMessageDialog(this, mensaje);
-
-            dispose();
-            new VentanaInstalaciones().setVisible(true);
+            HiloGeneral hiloReserva = new HiloGeneral(this, "Procesando Reserva", "Verificando disponibilidad...");
+            
+            new Thread(() -> {
+                hiloReserva.iniciar(); // Muestra la barra y procesa
+                
+                // Cuando termina, mostrar el mensaje de confirmación
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, mensaje, 
+                        "Reserva Confirmada", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                    new VentanaInstalaciones().setVisible(true);
+                });
+            }).start();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al confirmar la reserva.");
@@ -259,5 +268,8 @@ public class VentanaReserva extends JFrame {
             }
         }
     }
-
+    
 }
+
+
+

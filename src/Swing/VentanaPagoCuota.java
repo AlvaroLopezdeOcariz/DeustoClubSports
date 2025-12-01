@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
 
 public class VentanaPagoCuota extends JFrame {
@@ -115,12 +116,29 @@ public class VentanaPagoCuota extends JFrame {
 
        
         btnPagar.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this,
-                "Pago realizado correctamente\nTotal pagado: " + lblTotalSimple.getText().replace("Total:", ""),
-                "Pago", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            new VentanaPrincipal();
+            HiloGeneral hiloPago = new HiloGeneral(this, "Procesando Pago", "Verificando datos bancarios...");
+            
+            new Thread(() -> {
+                hiloPago.iniciar(); 
+                
+                //cuando termina
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this,
+                        "Pago realizado correctamente\nTotal pagado: " + 
+                        lblTotalSimple.getText().replace("Total:", ""),
+                        "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                    new VentanaPrincipal();
+                });
+            }).start();
         });
+
+        btnCancelar.addActionListener(e -> {
+            dispose();
+            new VentanaInicio();
+        });
+
+
         btnCancelar.addActionListener(e -> {
             dispose();
             new VentanaInicio();
