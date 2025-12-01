@@ -201,7 +201,7 @@ public class VentanaInstalaciones extends JFrame{
                 
                 
                 dispose();
-                new VentanaReserva().setVisible(true);
+                new VentanaReserva(inst).setVisible(true);
             });
             
             // Listener Cerrar
