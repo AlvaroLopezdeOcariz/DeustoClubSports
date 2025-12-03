@@ -46,25 +46,32 @@ public class BD {
 	    		   +"total REAL,"
 	    		   +"FOREIGN KEY(id_Usuario) REFERENCES Usuarios(id) ON DELETE CASCADE); ";
 	        		
-	       String sqlCreateTableItemCarritos="CREATE TABLE IF NOT EXISTS ItemsCarrito ("
-	       		+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
-	       		+ "    carrito_id INTEGER NOT NULL,"
-	       		+ "    nombre_item TEXT NOT NULL,"
-	       		+ "    precio REAL NOT NULL,"
-	       		
-	       		+ "    FOREIGN KEY (carrito_id) REFERENCES Carritos(id)"
-	       		+ ");";
-	      
+       String sqlCreateTableItemCarritos="CREATE TABLE IF NOT EXISTS ItemsCarrito ("
+       		+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
+       		+ "    carrito_id INTEGER NOT NULL,"
+       		+ "    nombre_item TEXT NOT NULL,"
+       		+ "    precio REAL NOT NULL,"
+       		
+       		+ "    FOREIGN KEY (carrito_id) REFERENCES Carritos(id)"
+       		+ ");";
+       
+       String sqlCreateTableComprasCafeteria="CREATE TABLE IF NOT EXISTS ComprasCafeteria ("
+       		+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
+       		+ "    producto TEXT NOT NULL,"
+       		+ "    cantidad INTEGER NOT NULL,"
+       		+ "    total REAL NOT NULL,"
+       		+ "    fecha TEXT NOT NULL"
+       		+ ");";
+      
 
-	        try (Connection conexion = DriverManager.getConnection(DB_URL);
-	             Statement consulta = conexion.createStatement()) {
-	            consulta.execute(sqlCreateTable);
-	           
-	            consulta.execute(sqlCreateTableUsuarios);
-	            consulta.execute(sqlCreateTableCarritos);
-	            consulta.execute(sqlCreateTableItemCarritos);
-	          
-	            
+        try (Connection conexion = DriverManager.getConnection(DB_URL);
+             Statement consulta = conexion.createStatement()) {
+            consulta.execute(sqlCreateTable);
+           
+            consulta.execute(sqlCreateTableUsuarios);
+            consulta.execute(sqlCreateTableCarritos);
+            consulta.execute(sqlCreateTableItemCarritos);
+            consulta.execute(sqlCreateTableComprasCafeteria);	            
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -337,5 +344,41 @@ public class BD {
 		  e.printStackTrace();
 	  }
 		  return false;		 
+	  }
+	  
+	  public static void insertarComprasCafeteria(String producto, int cantidad, double total, String fecha) {
+		  String insert = "INSERT INTO ComprasCafeteria (producto, cantidad, total, fecha) VALUES (?, ?, ?, ?)";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		PreparedStatement pstmt = conexion.prepareStatement(insert)) {
+			  pstmt.setString(1, producto);
+			  pstmt.setInt(2, cantidad);
+			  pstmt.setDouble(3, total);
+			  pstmt.setString(4, fecha);
+			  pstmt.executeUpdate();
+			  System.out.println("Compra de cafetería insertada exitosamente.");
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+	  }
+	  
+	  public static ArrayList<Object[]> obtenerComprasCafeteria() {
+		  ArrayList<Object[]> compras = new ArrayList<>();
+		  String query = "SELECT id, producto, cantidad, total, fecha FROM ComprasCafeteria";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		Statement stmt = conexion.createStatement();
+		  		ResultSet rs = stmt.executeQuery(query)) {
+			  while (rs.next()) {
+				  Object[] fila = new Object[5];
+				  fila[0] = rs.getInt("id");
+				  fila[1] = rs.getString("producto");
+				  fila[2] = rs.getInt("cantidad");
+				  fila[3] = String.format("%.2f€", rs.getDouble("total"));
+				  fila[4] = rs.getString("fecha");
+				  compras.add(fila);
+			  }
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+		  return compras;
 	  }
 }

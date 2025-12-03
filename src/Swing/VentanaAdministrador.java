@@ -26,6 +26,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import BD.BD;
+
 public class VentanaAdministrador extends JFrame {
 	//JTree
 	private DefaultTreeModel modeloArbol;
@@ -244,11 +246,13 @@ public class VentanaAdministrador extends JFrame {
 
 	private JScrollPane crearTablaCafeteria() {
 	    String[] columnas = {"ID", "Producto", "Cantidad", "Total", "Fecha"};
-	    Object[][] datos = {
-	        {201, "Café", 2, "3.00€", "17/11/2025"},
-	        {202, "Bocadillo", 1, "4.50€", "17/11/2025"},
-	        {203, "Refresco", 3, "6.00€", "17/11/2025"}
-	    };
+	    
+	    // Obtener datos de la BD
+	    ArrayList<Object[]> compras = BD.obtenerComprasCafeteria();
+	    Object[][] datos = new Object[compras.size()][];
+	    for (int i = 0; i < compras.size(); i++) {
+	        datos[i] = compras.get(i);
+	    }
 	    
 	    DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
 	        @Override

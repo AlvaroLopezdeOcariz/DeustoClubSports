@@ -9,6 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import BD.BD;
 
 public class VentanaCafeteria extends JFrame {
 
@@ -253,6 +257,21 @@ public class VentanaCafeteria extends JFrame {
             JOptionPane.showMessageDialog(this, "El carrito está vacío.");
             return;
         }
+        
+        // Obtener fecha actual
+        LocalDate hoy = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaActual = hoy.format(formato);
+        
+        // Guardar cada compra en la BD
+        for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
+            String producto = (String) modeloCarrito.getValueAt(i, 0);
+            Integer cantidad = (Integer) modeloCarrito.getValueAt(i, 1);
+            Double subtotal = (Double) modeloCarrito.getValueAt(i, 3);
+            
+            BD.insertarComprasCafeteria(producto, cantidad, subtotal, fechaActual);
+        }
+        
         JOptionPane.showMessageDialog(this,
                 String.format(Locale.US, "¡Gracias por tu compra! Importe: %.2f €", total));
         modeloCarrito.setRowCount(0);
