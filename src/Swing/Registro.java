@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,17 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BD.BD;
+
 public class Registro extends JFrame {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel pSur, pCentro, pFecha;
-    private JLabel lblNombre, lblApellido, lblPassword, lblCorreo, lblErrorCorreo, lblFechaNacimiento;
+    private JLabel lblNombre, lblApellido, lblPassword, lblCorreo, lblErrorCorreo, lblFechaNacimiento, lblMembresia;
     private JTextField txtNombre, txtCorreo, txtApellido;
     private JPasswordField txtPassword;
     private JButton btnAceptar, btnCancelar;
-    private JComboBox<String> cbDia, cbMes, cbAnio;
+    private JComboBox<String> cbDia, cbMes, cbAnio, cbMembresia;
 
     public Registro() {
         super();
@@ -38,7 +42,7 @@ public class Registro extends JFrame {
         // Creación de paneles
         pSur = new JPanel();
         //fila extra se usará para el mensaje de error
-        pCentro = new JPanel(new GridLayout(7, 2, 10, 10));
+        pCentro = new JPanel(new GridLayout(8, 2, 10, 10));
         pFecha = new JPanel(new GridLayout(1, 3, 5, 5));
 
         getContentPane().add(pCentro, BorderLayout.CENTER);
@@ -55,7 +59,8 @@ public class Registro extends JFrame {
         lblPassword = new JLabel("Contraseña:", JLabel.CENTER);
         lblCorreo = new JLabel("Correo electrónico:", JLabel.CENTER);
         lblErrorCorreo = new JLabel("", JLabel.LEFT);
-        lblErrorCorreo.setForeground(Color.RED); 
+        lblErrorCorreo.setForeground(Color.RED);
+        lblMembresia = new JLabel("Tipo de Membresía:", JLabel.CENTER);
 
         txtNombre = new JTextField(20);
         txtApellido = new JTextField(20);
@@ -67,6 +72,7 @@ public class Registro extends JFrame {
         cbDia = new JComboBox<String>();
         cbMes = new JComboBox<String>();
         cbAnio = new JComboBox<String>();
+        cbMembresia = new JComboBox<String>();
      
         for (int i = 1; i <= 31; i++) {
             cbDia.addItem(String.valueOf(i));
@@ -81,8 +87,12 @@ public class Registro extends JFrame {
         
         for (int i = 2008; i >= 1930; i--) {
         	cbAnio.addItem(String.valueOf(i));
-			
 		}
+        
+        String[] membresias = {"Titular", "Senior", "Familiar", "Estudiante"};
+        for (String m : membresias) {
+        	cbMembresia.addItem(m);
+        }
         
         //Añadir los componentes al panel 
         pCentro.add(lblNombre);
@@ -111,6 +121,9 @@ public class Registro extends JFrame {
         pFecha.add(cbMes);
         pFecha.add(cbAnio);
         
+        pCentro.add(lblMembresia);
+        pCentro.add(cbMembresia);
+        
 
         //Listeners
         btnAceptar.addActionListener((e) -> {
@@ -118,6 +131,7 @@ public class Registro extends JFrame {
             String correo = txtCorreo.getText();
             String apellido = txtApellido.getText();
             String contrasena = txtPassword.getText();
+            String membresia = (String) cbMembresia.getSelectedItem();
             
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || contrasena.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
@@ -129,8 +143,15 @@ public class Registro extends JFrame {
                 return;
             }
             
+            // Obtener la fecha actual
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaActual = sdf.format(new Date());
+            
+            // Guardar inscripción en la BD
+            BD.insertarInscripcion(nombre, apellido, correo, fechaActual, membresia);
+            
             JOptionPane.showMessageDialog(null,
-                "Usuario registrado correctamente:\nNombre: " + nombre + "\nCorreo: " + correo);
+                "Usuario registrado correctamente:\nNombre: " + nombre + "\nCorreo: " + correo + "\nMembresía: " + membresia);
             
 
             dispose();
@@ -167,4 +188,3 @@ public class Registro extends JFrame {
         new Registro();
     }
 }
-

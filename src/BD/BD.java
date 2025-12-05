@@ -62,6 +62,15 @@ public class BD {
        		+ "    total REAL NOT NULL,"
        		+ "    fecha TEXT NOT NULL"
        		+ ");";
+       
+       String sqlCreateTableInscripciones="CREATE TABLE IF NOT EXISTS Inscripciones ("
+       		+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
+       		+ "    nombre TEXT NOT NULL,"
+       		+ "    apellidos TEXT NOT NULL,"
+       		+ "    correo TEXT NOT NULL,"
+       		+ "    fecha_inscripcion TEXT NOT NULL,"
+       		+ "    membresia TEXT NOT NULL"
+       		+ ");";
       
 
         try (Connection conexion = DriverManager.getConnection(DB_URL);
@@ -71,7 +80,8 @@ public class BD {
             consulta.execute(sqlCreateTableUsuarios);
             consulta.execute(sqlCreateTableCarritos);
             consulta.execute(sqlCreateTableItemCarritos);
-            consulta.execute(sqlCreateTableComprasCafeteria);	            
+            consulta.execute(sqlCreateTableComprasCafeteria);
+            consulta.execute(sqlCreateTableInscripciones);	            
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -380,5 +390,42 @@ public class BD {
 			  e.printStackTrace();
 		  }
 		  return compras;
+	  }
+	  
+	  public static void insertarInscripcion(String nombre, String apellidos, String correo, String fecha, String membresia) {
+		  String insert = "INSERT INTO Inscripciones (nombre, apellidos, correo, fecha_inscripcion, membresia) VALUES (?, ?, ?, ?, ?)";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		PreparedStatement pstmt = conexion.prepareStatement(insert)) {
+			  pstmt.setString(1, nombre);
+			  pstmt.setString(2, apellidos);
+			  pstmt.setString(3, correo);
+			  pstmt.setString(4, fecha);
+			  pstmt.setString(5, membresia);
+			  pstmt.executeUpdate();
+			  System.out.println("Inscripción insertada exitosamente.");
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+	  }
+	  
+	  public static ArrayList<Object[]> obtenerInscripciones() {
+		  ArrayList<Object[]> inscripciones = new ArrayList<>();
+		  String query = "SELECT id, nombre, apellidos, fecha_inscripcion, membresia FROM Inscripciones ORDER BY id DESC";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		Statement stmt = conexion.createStatement();
+		  		ResultSet rs = stmt.executeQuery(query)) {
+			  while (rs.next()) {
+				  Object[] fila = new Object[5];
+				  fila[0] = rs.getInt("id");
+				  fila[1] = rs.getString("nombre");
+				  fila[2] = rs.getString("apellidos");
+				  fila[3] = rs.getString("fecha_inscripcion");
+				  fila[4] = rs.getString("membresia");
+				  inscripciones.add(fila);
+			  }
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+		  return inscripciones;
 	  }
 }

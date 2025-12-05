@@ -226,11 +226,13 @@ public class VentanaAdministrador extends JFrame {
 
 	private JScrollPane crearTablaInscripciones() {
 	    String[] columnas = {"ID Socio", "Nombre", "Apellidos", "Fecha", "Membresía"};
-	    Object[][] datos = {
-	        {101, "Álvaro", "Franco", "10/11/2025", "Titular"},
-	        {102, "Jaremias", "Fajardo", "12/11/2025", "Senior"},
-	        {103, "Carlos Antonio", "Pueblos", "14/11/2025", "Familiar"}
-	    };
+	    
+	    // Obtener datos de la BD
+	    ArrayList<Object[]> inscripciones = BD.obtenerInscripciones();
+	    Object[][] datos = new Object[inscripciones.size()][];
+	    for (int i = 0; i < inscripciones.size(); i++) {
+	        datos[i] = inscripciones.get(i);
+	    }
 	    
 	    DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
 	        @Override
@@ -354,4 +356,3 @@ public class VentanaAdministrador extends JFrame {
 		new VentanaAdministrador();
 	}
 }
-
