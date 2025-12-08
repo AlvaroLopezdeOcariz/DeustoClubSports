@@ -1,7 +1,7 @@
-package Swing;
+package dominio;
 
 public enum TipoDeporte {
-			FUTBOL,
+	FUTBOL,
 	BALONCESTO,
 	TENIS,
 	PINGPONG,

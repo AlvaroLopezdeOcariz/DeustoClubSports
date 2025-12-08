@@ -1,6 +1,10 @@
-package Swing;
+package ui.ventanas;
 
-
+import dominio.*;
+import dominio.MenuItem;
+import BD.BD;
+import hilos.HiloGeneral;
+import ui.modelos.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,10 +35,10 @@ public class VentanaCafeteria extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10,10));
+        setLayout(new BorderLayout(10, 10));
 
         // Márgenes
-        ((JComponent)getContentPane()).setBorder(new EmptyBorder(10,10,10,10));
+        ((JComponent) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
 
         // Lista de productos a la izquierda
         add(crearPanelProductos(), BorderLayout.WEST);
@@ -48,9 +52,9 @@ public class VentanaCafeteria extends JFrame {
 
     // Apartado de crear los productos
     private JPanel crearPanelProductos() {
-        JPanel p = new JPanel(new BorderLayout(5,5));
+        JPanel p = new JPanel(new BorderLayout(5, 5));
         p.setPreferredSize(new Dimension(260, 0));
-        
+
         // Título
         JLabel titulo = new JLabel("Productos");
         titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 16f));
@@ -65,7 +69,7 @@ public class VentanaCafeteria extends JFrame {
         listaProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane spLista = new JScrollPane(listaProductos);
         p.add(spLista, BorderLayout.CENTER);
-        
+
         // Botón para añadir al carrito
         JPanel acciones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnAdd = new JButton("Añadir");
@@ -79,30 +83,32 @@ public class VentanaCafeteria extends JFrame {
 
     // Apartado de crear el carrito
     private JPanel crearPanelCarrito() {
-        JPanel p = new JPanel(new BorderLayout(5,5));
-        
+        JPanel p = new JPanel(new BorderLayout(5, 5));
+
         // Título
         JLabel titulo = new JLabel("Carrito");
         titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 16f));
         p.add(titulo, BorderLayout.NORTH);
 
         // Modelo de la tabla: columnas -> Producto, Cantidad, Precio, Subtotal
-        modeloCarrito = new DefaultTableModel(new Object[]{"Producto","Cant.","Precio","Subtotal"}, 0) {
-            @Override public boolean isCellEditable(int row, int column) {
+        modeloCarrito = new DefaultTableModel(new Object[] { "Producto", "Cant.", "Precio", "Subtotal" }, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
                 return false; // Hacer las celdas no editables
             }
-            
+
             // Define tipos de datos para cada columna
             // Pongo el ? para que no de error en versiones antiguas de Java
-            @Override public Class<?> getColumnClass(int columnIndex) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
                     case 1 -> Integer.class; // cantidad
                     case 2, 3 -> Double.class; // precio, subtotal
                     default -> String.class;
                 };
             }
-        }; 
-        
+        };
+
         // Tabla del carrito
         tablaCarrito = new JTable(modeloCarrito);
         tablaCarrito.setFillsViewportHeight(true);
@@ -115,7 +121,7 @@ public class VentanaCafeteria extends JFrame {
         JButton btnMenos = new JButton("–");
         JButton btnEliminar = new JButton("Eliminar");
         JButton btnVaciar = new JButton("Vaciar");
-        
+
         // Listeners de los botones
         btnMas.addActionListener(e -> modificarCantidad(+1)); // aumentar cantidad
         btnMenos.addActionListener(e -> modificarCantidad(-1)); // disminuir cantidad
@@ -124,13 +130,13 @@ public class VentanaCafeteria extends JFrame {
             modeloCarrito.setRowCount(0);
             recalcularTotal();
         });
-        
+
         // Añadir botones al panel
         botones.add(btnMenos);
         botones.add(btnMas);
         botones.add(btnEliminar);
         botones.add(btnVaciar);
-        
+
         p.add(botones, BorderLayout.SOUTH);
         return p;
     }
@@ -138,25 +144,25 @@ public class VentanaCafeteria extends JFrame {
     // Apartado inferior (total y pagar)
     private JPanel crearPanelInferior() {
         JPanel p = new JPanel(new BorderLayout());
-        
+
         // Etiqueta del total
         lblTotal = new JLabel("Total: 0.00 €");
         lblTotal.setFont(lblTotal.getFont().deriveFont(Font.BOLD, 16f));
         p.add(lblTotal, BorderLayout.WEST);
-		
+
         // Botón de pagar
         JButton btnPagar = new JButton("Pagar");
         btnPagar.addActionListener(e -> pagar());
         JButton btnVolver = new JButton("Volver atrás");
         btnVolver.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new VentanaInicio();
-				
-			}
-		});
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new VentanaInicio();
+
+            }
+        });
         JPanel btnRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnRight.add(btnPagar);
         btnRight.add(btnVolver);
@@ -165,29 +171,30 @@ public class VentanaCafeteria extends JFrame {
     }
 
     // ---- Metodos de los listeners ----
-    
+
     // Añadir producto seleccionado al carrito
     private void anadirSeleccionado() {
-    	// Obtener producto seleccionado
+        // Obtener producto seleccionado
         MenuItem seleccionado = listaProductos.getSelectedValue();
-        if (seleccionado == null) return;
+        if (seleccionado == null)
+            return;
 
         // Si ya está en el carrito, incrementa cantidad
         int row = buscarProductoEnCarrito(seleccionado.getNombre()); // buscar por nombre
         if (row >= 0) {
             int cant = (Integer) modeloCarrito.getValueAt(row, 1); // obtener cantidad actual
             cant++; // incrementar cantidad
-            modeloCarrito.setValueAt(cant, row, 1); // actualizar cantidad 
+            modeloCarrito.setValueAt(cant, row, 1); // actualizar cantidad
             double precio = (Double) modeloCarrito.getValueAt(row, 2); // obtener precio
             modeloCarrito.setValueAt(cant * precio, row, 3); // actualizar subtotal
         } else {
-        	double precio = seleccionado.getPrecio();
-        	modeloCarrito.addRow(new Object[]{
-        	    seleccionado.getNombre(),                 
-        	    Integer.valueOf(1),                       
-        	    Double.valueOf(precio),                   
-        	    Double.valueOf(precio)                    
-        	});
+            double precio = seleccionado.getPrecio();
+            modeloCarrito.addRow(new Object[] {
+                    seleccionado.getNombre(),
+                    Integer.valueOf(1),
+                    Double.valueOf(precio),
+                    Double.valueOf(precio)
+            });
 
         }
         recalcularTotal(); // actualizar total
@@ -195,20 +202,22 @@ public class VentanaCafeteria extends JFrame {
 
     // Buscar producto en el carrito por el nombre
     private int buscarProductoEnCarrito(String nombre) {
-    	// recorrer filas del modelo
+        // recorrer filas del modelo
         for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
             String nom = (String) modeloCarrito.getValueAt(i, 0);
-            if (nom.equals(nombre)) return i; // devolver fila si coincide
+            if (nom.equals(nombre))
+                return i; // devolver fila si coincide
         }
         return -1; // -1 en caso de no encontrarlo
     }
-    
+
     // Modificar cantidad del producto seleccionado en el carrito
-    private void modificarCantidad(int valor) { 
-    	// obtener fila seleccionada
+    private void modificarCantidad(int valor) {
+        // obtener fila seleccionada
         int row = tablaCarrito.getSelectedRow();
-        if (row < 0) return;
-        
+        if (row < 0)
+            return;
+
         // modificar cantidad
         int cant = (Integer) modeloCarrito.getValueAt(row, 1);
         cant += valor;
@@ -216,17 +225,17 @@ public class VentanaCafeteria extends JFrame {
             // si el usuario hace la resta cuando esta en 1, se elimina la fila
             modeloCarrito.removeRow(row);
         } else {
-        	// actualizar cantidad y subtotal
+            // actualizar cantidad y subtotal
             modeloCarrito.setValueAt(cant, row, 1);
             double precio = (Double) modeloCarrito.getValueAt(row, 2);
             modeloCarrito.setValueAt(cant * precio, row, 3);
         }
         recalcularTotal(); // actualizar total
     }
-    
+
     // Eliminar producto seleccionado del carrito
     private void eliminarSeleccionado() {
-    	// obtener fila seleccionada
+        // obtener fila seleccionada
         int row = tablaCarrito.getSelectedRow();
         // eliminar fila si hay selección
         if (row >= 0) {
@@ -234,10 +243,10 @@ public class VentanaCafeteria extends JFrame {
             recalcularTotal();
         }
     }
-    
+
     // Recalcular el total del carrito
     private void recalcularTotal() {
-    	// sumar subtotales
+        // sumar subtotales
         double total = 0.0;
         // recorrer filas del modelo
         for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
@@ -246,7 +255,7 @@ public class VentanaCafeteria extends JFrame {
         lblTotal.setText(String.format(Locale.US, "Total: %.2f €", total));
         // el US en Locale es para forzar el punto decimal y no la coma
     }
-    
+
     // Pagar el carrito - mas adelante se programara una venta para pagar
     private void pagar() {
         double total = 0.0;
@@ -257,21 +266,21 @@ public class VentanaCafeteria extends JFrame {
             JOptionPane.showMessageDialog(this, "El carrito está vacío.");
             return;
         }
-        
+
         // Obtener fecha actual
         LocalDate hoy = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaActual = hoy.format(formato);
-        
+
         // Guardar cada compra en la BD
         for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
             String producto = (String) modeloCarrito.getValueAt(i, 0);
             Integer cantidad = (Integer) modeloCarrito.getValueAt(i, 1);
             Double subtotal = (Double) modeloCarrito.getValueAt(i, 3);
-            
+
             BD.insertarComprasCafeteria(producto, cantidad, subtotal, fechaActual);
         }
-        
+
         JOptionPane.showMessageDialog(this,
                 String.format(Locale.US, "¡Gracias por tu compra! Importe: %.2f €", total));
         modeloCarrito.setRowCount(0);

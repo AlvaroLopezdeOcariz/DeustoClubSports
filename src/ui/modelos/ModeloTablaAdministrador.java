@@ -1,8 +1,9 @@
-package Swing;
+package ui.modelos;
 
 import java.util.List;
 
 import BD.BD;
+import dominio.Productos;
 
 public class ModeloTablaAdministrador extends javax.swing.table.AbstractTableModel {
 
@@ -18,27 +19,30 @@ public class ModeloTablaAdministrador extends javax.swing.table.AbstractTableMod
 		this.productos = productos;
 		this.header = header;
 	}
+
 	public int getRowCount() {
 		return productos.size();
 	}
+
 	public int getColumnCount() {
 		return header.length;
 	}
+
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Productos p= productos.get(rowIndex);
-		int id= BD.ObtenerIdProducto(p.getNombre());
-		
+		Productos p = productos.get(rowIndex);
+		int id = BD.ObtenerIdProducto(p.getNombre());
+
 		String fecha = BD.obtenerFechaRestock(id);
 		switch (columnIndex) {
-		case 0:
-			return id;
+			case 0:
+				return id;
 			case 1:
 				return p.getNombre();
-			
-				case 2:
-					return p.getStock();
-					case 3:
-						return fecha;
+
+			case 2:
+				return p.getStock();
+			case 3:
+				return fecha;
 		}
 		return "";
 	}

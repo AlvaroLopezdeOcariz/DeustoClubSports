@@ -1,4 +1,9 @@
-package Swing;
+package ui.ventanas;
+
+import dominio.*;
+import BD.BD;
+import hilos.HiloGeneral;
+import ui.modelos.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,10 +26,10 @@ import BD.BD;
 
 public class Registro extends JFrame {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel pSur, pCentro, pFecha;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    private JPanel pSur, pCentro, pFecha;
     private JLabel lblNombre, lblApellido, lblPassword, lblCorreo, lblErrorCorreo, lblFechaNacimiento, lblMembresia;
     private JTextField txtNombre, txtCorreo, txtApellido;
     private JPasswordField txtPassword;
@@ -34,21 +39,21 @@ public class Registro extends JFrame {
     public Registro() {
         super();
 
-        //Propiedades de la ventana
+        // Propiedades de la ventana
         setTitle("Registro de Usuario");
         setBounds(400, 200, 800, 500);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         // Creación de paneles
         pSur = new JPanel();
-        //fila extra se usará para el mensaje de error
+        // fila extra se usará para el mensaje de error
         pCentro = new JPanel(new GridLayout(8, 2, 10, 10));
         pFecha = new JPanel(new GridLayout(1, 3, 5, 5));
 
         getContentPane().add(pCentro, BorderLayout.CENTER);
         getContentPane().add(pSur, BorderLayout.SOUTH);
 
-        //Creación de componentes
+        // Creación de componentes
         btnAceptar = new JButton("Aceptar");
         btnAceptar.setBackground(Color.GREEN);
         btnCancelar = new JButton("Cancelar");
@@ -66,35 +71,35 @@ public class Registro extends JFrame {
         txtApellido = new JTextField(20);
         txtCorreo = new JTextField(20);
         txtPassword = new JPasswordField(20);
-        
+
         lblFechaNacimiento = new JLabel("Fecha de nacimiento: ", JLabel.CENTER);
-        
+
         cbDia = new JComboBox<String>();
         cbMes = new JComboBox<String>();
         cbAnio = new JComboBox<String>();
         cbMembresia = new JComboBox<String>();
-     
+
         for (int i = 1; i <= 31; i++) {
             cbDia.addItem(String.valueOf(i));
         }
-        
-        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-        
+
+        String[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+
         for (String m : meses) {
-			cbMes.addItem(m);
-		}
-        
-        for (int i = 2008; i >= 1930; i--) {
-        	cbAnio.addItem(String.valueOf(i));
-		}
-        
-        String[] membresias = {"Titular", "Senior", "Familiar", "Estudiante"};
-        for (String m : membresias) {
-        	cbMembresia.addItem(m);
+            cbMes.addItem(m);
         }
-        
-        //Añadir los componentes al panel 
+
+        for (int i = 2008; i >= 1930; i--) {
+            cbAnio.addItem(String.valueOf(i));
+        }
+
+        String[] membresias = { "Titular", "Senior", "Familiar", "Estudiante" };
+        for (String m : membresias) {
+            cbMembresia.addItem(m);
+        }
+
+        // Añadir los componentes al panel
         pCentro.add(lblNombre);
         pCentro.add(txtNombre);
 
@@ -107,52 +112,51 @@ public class Registro extends JFrame {
         pCentro.add(lblCorreo);
         pCentro.add(txtCorreo);
 
-       
-        pCentro.add(new JLabel("")); 
-        pCentro.add(lblErrorCorreo);  
+        pCentro.add(new JLabel(""));
+        pCentro.add(lblErrorCorreo);
 
-       
         pSur.add(btnAceptar);
         pSur.add(btnCancelar);
-        
+
         pCentro.add(lblFechaNacimiento);
         pCentro.add(pFecha);
         pFecha.add(cbDia);
         pFecha.add(cbMes);
         pFecha.add(cbAnio);
-        
+
         pCentro.add(lblMembresia);
         pCentro.add(cbMembresia);
-        
 
-        //Listeners
+        // Listeners
         btnAceptar.addActionListener((e) -> {
             String nombre = txtNombre.getText();
             String correo = txtCorreo.getText();
             String apellido = txtApellido.getText();
             String contrasena = txtPassword.getText();
             String membresia = (String) cbMembresia.getSelectedItem();
-            
+
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || contrasena.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (!correo.contains("@")) {
-                JOptionPane.showMessageDialog(this, "El correo debe contener un '@'", "Correo inválido", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El correo debe contener un '@'", "Correo inválido",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             // Obtener la fecha actual
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaActual = sdf.format(new Date());
-            
+
             // Guardar inscripción en la BD
             BD.insertarInscripcion(nombre, apellido, correo, fechaActual, membresia);
-            
+
             JOptionPane.showMessageDialog(null,
-                "Usuario registrado correctamente:\nNombre: " + nombre + "\nCorreo: " + correo + "\nMembresía: " + membresia);
-            
+                    "Usuario registrado correctamente:\nNombre: " + nombre + "\nCorreo: " + correo + "\nMembresía: "
+                            + membresia);
 
             dispose();
             new VentanaPagoCuota();
@@ -163,7 +167,6 @@ public class Registro extends JFrame {
             new VentanaInicio();
         });
 
-       
         txtCorreo.addFocusListener(new FocusListener() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -177,7 +180,7 @@ public class Registro extends JFrame {
 
             @Override
             public void focusGained(FocusEvent e) {
-                //Nada
+                // Nada
             }
         });
 

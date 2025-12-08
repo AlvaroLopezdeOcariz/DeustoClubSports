@@ -1,4 +1,9 @@
-package Swing;
+package ui.ventanas;
+
+import dominio.*;
+import BD.BD;
+import hilos.HiloGeneral;
+import ui.modelos.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,33 +38,29 @@ public class VentanaTienda extends JFrame {
 
     public VentanaTienda() {
 
-        Color colorFondo = new Color(245, 245, 245);       // gris claro 
-        Color colorPrimario = new Color(30, 144, 255);     // azul deusto
+        Color colorFondo = new Color(245, 245, 245); // gris claro
+        Color colorPrimario = new Color(30, 144, 255); // azul deusto
         Color colorTexto = new Color(40, 40, 40);
 
-        
-    	Productos[] productos = BD.obtenerProductos();
+        Productos[] productos = BD.obtenerProductos();
 
-        String[] header = {"TipoDeporte","Producto", "Precio", "Stock" };
+        String[] header = { "TipoDeporte", "Producto", "Precio", "Stock" };
 
-      
         setBounds(400, 200, 800, 400);
         setTitle("DeustoClubSports");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         getContentPane().setBackground(colorFondo);
-        Productos[] ps= BD.obtenerProductos();
-        
+        Productos[] ps = BD.obtenerProductos();
+
         modelo = new TablaProductosModelo(ps, header);
         JTable tablaProductos = new JTable(modelo);
 
-     
         tablaProductos.setRowHeight(35);
         tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 13)); // Fuente guay, cambiable a gusto
-        tablaProductos.setShowGrid(true);            
-        tablaProductos.setGridColor(Color.BLACK);    
+        tablaProductos.setShowGrid(true);
+        tablaProductos.setGridColor(Color.BLACK);
 
-        
         JTableHeader headerTabla = tablaProductos.getTableHeader();
         headerTabla.setBackground(colorPrimario);
         headerTabla.setForeground(Color.WHITE);
@@ -81,7 +82,6 @@ public class VentanaTienda extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tablaProductos);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-    
         JPanel tituloPanel = new JPanel();
         tituloPanel.setBackground(colorFondo);
 
@@ -114,24 +114,21 @@ public class VentanaTienda extends JFrame {
 
         tituloPanel.add(tituloLabel);
         tituloPanel.add(comboBox);
-        
-        
-        
+
         JButton btnVolver = new JButton("Volver atrás");
         btnVolver.setFocusPainted(false);
         btnVolver.setBackground(colorPrimario);
         btnVolver.setForeground(Color.WHITE);
         btnVolver.setBorder(BorderFactory.createCompoundBorder(
                 new RoundBorder(10),
-                BorderFactory.createEmptyBorder(5, 15, 5, 15)
-        ));
+                BorderFactory.createEmptyBorder(5, 15, 5, 15)));
 
         // Listener
         btnVolver.addActionListener(e -> {
             dispose();
             new VentanaPrincipal();
         });
-        
+
         tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -141,8 +138,7 @@ public class VentanaTienda extends JFrame {
 
                         // Recuperar el producto seleccionado desde el modelo
                         Productos producto = modelo.getProductoAt(fila);
-                                             
-                        
+
                         // Abrir ventana de compra
                         dispose();
                         new VentanaCompraProducto(VentanaTienda.this, producto).setVisible(true);
@@ -150,7 +146,6 @@ public class VentanaTienda extends JFrame {
                 }
             }
         });
-
 
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         panelInferior.setBackground(colorFondo);
@@ -163,11 +158,12 @@ public class VentanaTienda extends JFrame {
         setVisible(true);
     }
 
-    // Código sacado de https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java	
+    // Código sacado de
+    // https://stackoverflow.com/questions/423950/rounded-swing-jbutton-using-java
     class RoundBorder extends AbstractBorder {
-        
-		private static final long serialVersionUID = 1L;
-		private int radius;
+
+        private static final long serialVersionUID = 1L;
+        private int radius;
 
         public RoundBorder(int radius) {
             this.radius = radius;
@@ -178,17 +174,15 @@ public class VentanaTienda extends JFrame {
             g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
-    
-    
-    
+
     class TipoDeporteRenderer extends DefaultTableCellRenderer {
 
         private static final long serialVersionUID = 1L;
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus,
-                                                       int row, int column) {
+                boolean isSelected, boolean hasFocus,
+                int row, int column) {
 
             JLabel label = (JLabel) super.getTableCellRendererComponent(
                     table, value, isSelected, hasFocus, row, column);
@@ -208,10 +202,12 @@ public class VentanaTienda extends JFrame {
             return label;
         }
     }
+
     private ImageIcon cargarIcono(String ruta, int w, int h) {
         try {
             ImageIcon original = new ImageIcon(ruta);
-            if (original.getIconWidth() <= 0) return null;
+            if (original.getIconWidth() <= 0)
+                return null;
             Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
             return new ImageIcon(img);
         } catch (Exception e) {
@@ -219,11 +215,8 @@ public class VentanaTienda extends JFrame {
         }
     }
 
-
     public static void main(String[] args) {
-    
+
         new VentanaTienda();
     }
 }
-
-

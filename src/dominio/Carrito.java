@@ -1,4 +1,4 @@
-package Swing;
+package dominio;
 
 import java.awt.Container;
 import java.util.ArrayList;
@@ -15,7 +15,8 @@ public class Carrito {
     }
 
     public static Carrito getInstance() {
-        if (instancia == null) instancia = new Carrito();
+        if (instancia == null)
+            instancia = new Carrito();
         return instancia;
     }
 
@@ -24,7 +25,7 @@ public class Carrito {
         for (ItemCarrito item : items) {
             if (item.getProducto().equals(producto)) {
                 item.setCantidad(item.getCantidad() + Math.max(1, cantidad));
-               
+
             }
         }
         // Si no existe
@@ -33,25 +34,31 @@ public class Carrito {
 
     // Elimina producto por índice
     public void removeAt(int index) {
-        if (index >= 0 && index < items.size()) items.remove(index);
+        if (index >= 0 && index < items.size())
+            items.remove(index);
     }
 
-    public void clear() { items.clear(); }
+    public void clear() {
+        items.clear();
+    }
 
-    public List<ItemCarrito> getItems() { return items; }
+    public List<ItemCarrito> getItems() {
+        return items;
+    }
 
     public double calcularTotal() {
-       for (ItemCarrito item : items) {
-    	   		double total = 0;
-		for (ItemCarrito i : items) {
-			total += item.getSubtotal();
-		}
-		return total;
-       }
-	 	   return 0;
+        for (ItemCarrito item : items) {
+            double total = 0;
+            for (ItemCarrito i : items) {
+                total += item.getSubtotal();
+            }
+            return total;
+        }
+        return 0;
     }
 
-    public boolean isEmpty() { return items.isEmpty(); }
-
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 
 }
