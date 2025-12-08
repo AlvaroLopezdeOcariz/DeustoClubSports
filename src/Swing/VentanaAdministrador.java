@@ -164,14 +164,10 @@ public class VentanaAdministrador extends JFrame {
 	        {3, "Raqueta Tenis", 3, "65.00€", "17/11/2025"}
 	    };
 	    
-	    DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
-	        @Override
-	        public boolean isCellEditable(int row, int column) {
-	            return false; 
-	        }
-	    };
+	    ModeloTablaAdministrador modeloTabla = new ModeloTablaAdministrador(BD.obtenerRestocks(), columnas);
+	   
 	    
-	    tablaProductos = new JTable(modelo);
+	    tablaProductos = new JTable(modeloTabla);
 	    tablaProductos.getTableHeader().setReorderingAllowed(false);
 	    
 	    

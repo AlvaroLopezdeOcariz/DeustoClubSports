@@ -24,7 +24,7 @@ public class Carrito {
         for (ItemCarrito item : items) {
             if (item.getProducto().equals(producto)) {
                 item.setCantidad(item.getCantidad() + Math.max(1, cantidad));
-                return;
+               
             }
         }
         // Si no existe

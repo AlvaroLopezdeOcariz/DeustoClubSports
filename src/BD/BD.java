@@ -71,6 +71,13 @@ public class BD {
        		+ "    fecha_inscripcion TEXT NOT NULL,"
        		+ "    membresia TEXT NOT NULL"
        		+ ");";
+       String sqlCreateTableRestock="CREATE TABLE IF NOT EXISTS Restock ("
+	   		+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
+	   		+ "    producto_id INTEGER NOT NULL,"
+	   		+ "    cantidad INTEGER NOT NULL,"
+	   		+ "    fecha_restock TEXT NOT NULL,"
+	   		+ "    FOREIGN KEY (producto_id) REFERENCES Productos(id)"
+	   		+ ");";
       
 
         try (Connection conexion = DriverManager.getConnection(DB_URL);
@@ -81,7 +88,8 @@ public class BD {
             consulta.execute(sqlCreateTableCarritos);
             consulta.execute(sqlCreateTableItemCarritos);
             consulta.execute(sqlCreateTableComprasCafeteria);
-            consulta.execute(sqlCreateTableInscripciones);	            
+            consulta.execute(sqlCreateTableInscripciones);	
+            consulta.execute(sqlCreateTableRestock);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -255,7 +263,27 @@ public class BD {
   	
   	return 0;
   }
-  	
+  
+  public static int ObtenerIdProducto(String nombre) {
+	  	String query = "SELECT * FROM Productos WHERE nombre=?";
+	  	try (Connection conexion = DriverManager.getConnection(DB_URL);
+	  			PreparedStatement pstmt = conexion.prepareStatement(query)){
+	  		
+	  		pstmt.setString(1, nombre);
+	  		
+	  		try (ResultSet rs = pstmt.executeQuery()) {
+	              if (rs.next()) {
+	                  return rs.getInt("id"); // Devolver el ID de la actividad
+	              } else {
+	                  System.out.println("Producto no encontrado.");
+	              }
+	          }
+	  		}
+	  	catch (SQLException e) {
+	          e.printStackTrace();
+	      }
+		return 0;
+  }
 
   public static String obtenerUsuario(String nombre) {
 	  	String query = "SELECT * FROM Usuarios WHERE nomUsuario=?";
@@ -428,4 +456,104 @@ public class BD {
 		  }
 		  return inscripciones;
 	  }
+	  
+	  public static int obtenerStockProducto(int productoId) {
+		  String query = "SELECT stock FROM Productos WHERE id=?";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+				  		  		PreparedStatement pstmt = conexion.prepareStatement(query)){
+			  
+			  		pstmt.setInt(1, productoId);
+			  		
+			  		try (ResultSet rs = pstmt.executeQuery()) {
+			              if (rs.next()) {
+			                  return rs.getInt("stock"); // Devolver el stock del producto
+			              } else {
+			                  System.out.println("Producto no encontrado.");
+			              }
+			          }
+			  		
+			  				  	}catch (SQLException e) {
+			  				  		e.printStackTrace();
+			  				  		
+		  }
+		  return 0;
+		 	  }
+	  public static void insertarRestock(int productoId, int cantidad, String fecha, String nombreProducto) {
+		  		
+		  	  
+			
+			  String insert = "INSERT INTO Restock (producto_id, cantidad, fecha_restock) VALUES (?, ?, ?)";
+			  try (Connection conexion = DriverManager.getConnection(DB_URL);
+			  		PreparedStatement pstmt = conexion.prepareStatement(insert)) {
+				  pstmt.setInt(1, productoId);
+				  pstmt.setInt(2, cantidad);
+				  pstmt.setString(3, fecha);
+				  pstmt.executeUpdate();
+				  System.out.println("Restock insertado exitosamente.");
+			  } catch (SQLException e) {
+				  e.printStackTrace();
+			  }
+			  }
+		  
+		  
+	
+	  
+	  public static void eliminarRestock(int restockId) {
+		  String delete = "DELETE FROM Restock WHERE id=?";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		PreparedStatement pstmt = conexion.prepareStatement(delete)) {
+			  pstmt.setInt(1, restockId);
+			  pstmt.executeUpdate();
+			  System.out.println("Restock eliminado exitosamente.");
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+	  }
+	  
+	  public static String obtenerFechaRestock(int restockId) {
+		  String query = "SELECT fecha_restock FROM Restock WHERE id=?";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		PreparedStatement pstmt = conexion.prepareStatement(query)){
+			  
+			  		pstmt.setInt(1, restockId);
+			  		
+			  		try (ResultSet rs = pstmt.executeQuery()) {
+			              if (rs.next()) {
+			                  return rs.getString("fecha_restock"); // Devolver la fecha de restock
+			              } else {
+			                  System.out.println("Restock no encontrado.");
+			              }
+			          }
+			  		
+			  				  	}catch (SQLException e) {
+			  				  		e.printStackTrace();
+			  				  		
+		  }
+		  return "";
+	  }
+	  public static ArrayList<Productos> obtenerRestocks() {
+		  ArrayList<Productos> restocks = new ArrayList<>();
+		  String query = "SELECT producto_id, cantidad, fecha_restock FROM Restock";
+		  try (Connection conexion = DriverManager.getConnection(DB_URL);
+		  		Statement stmt = conexion.createStatement();
+		  		ResultSet rs = stmt.executeQuery(query)) {
+			  while (rs.next()) {
+				  int productoId = rs.getInt("producto_id");
+				  int cantidad = rs.getInt("cantidad");
+				 
+				  
+				  // Obtener el producto asociado al restock
+				  for (Productos p : obtenerProductos()) {
+					  int id = ObtenerIdProducto(p.getNombre());
+					  if (id == productoId) {
+						  restocks.add(new Productos(p.getNombre(), p.getPrecio(), p.getDeporte(), cantidad));
+					  }
+				  }
+			  }
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+		  return restocks;
+	  }
+	  
 }
