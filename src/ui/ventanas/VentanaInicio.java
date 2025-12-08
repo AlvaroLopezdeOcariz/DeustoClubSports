@@ -87,7 +87,7 @@ public class VentanaInicio extends JFrame {
 
 		// Panel y label para el anuncio
 		JPanel pAnuncio = new JPanel(null); // Layout null para mover libremente
-		pAnuncio.setBackground(Color.YELLOW);
+		pAnuncio.setBackground(Color.WHITE);
 		pAnuncio.setPreferredSize(new java.awt.Dimension(800, 30));
 
 		JLabel lblAnuncio = new JLabel("¡Apuntate ahora a nuestro torneo!");
@@ -112,7 +112,7 @@ public class VentanaInicio extends JFrame {
 
 		pNorte.add(btnInciarSesion);
 		pNorte.add(btnResgitrar);
-		pNorteIzq.add(btnCafeteria);
+		
 
 		// Iniciar hilo de publicidad
 		hilos.HiloPublicidad hilo = new hilos.HiloPublicidad(lblAnuncio, pAnuncio, "¡Apuntate ahora a nuestro torneo!");
