@@ -46,4 +46,9 @@ public class ModeloTablaAdministrador extends javax.swing.table.AbstractTableMod
 		}
 		return "";
 	}
+
+	@Override
+	public String getColumnName(int column) {
+		return header[column];
+	}
 }

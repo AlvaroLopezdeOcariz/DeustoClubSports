@@ -31,8 +31,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import BD.BD;
-
 public class VentanaAdministrador extends JFrame {
 	// JTree
 	private DefaultTreeModel modeloArbol;

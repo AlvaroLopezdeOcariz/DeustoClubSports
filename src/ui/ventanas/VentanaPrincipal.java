@@ -58,6 +58,12 @@ public class VentanaPrincipal extends JFrame {
 		btnCarrito.setFocusPainted(false);
 		btnCarrito.setBackground(new Color(230, 230, 230));
 		btnCarrito.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
+		JButton btnTorneo = new JButton("TORNEO");
+		btnTorneo.setFocusPainted(false);
+		btnTorneo.setBackground(new Color(255, 215, 0)); // Color dorado para destacar
+		btnTorneo.setFont(new Font("SansSerif", Font.BOLD, 14));
+
 		// Panel Centro
 		pCentro = new JPanel();
 
@@ -89,6 +95,19 @@ public class VentanaPrincipal extends JFrame {
 		pNorte.add(btnCarrito);
 		pNorte.add(btnInstalaciones);
 		pNorte.add(btnTienda);
+		pNorte.add(btnTorneo); // Variable local, necesita ser accesible o declarada final/efectivamente final
+								// si se usa dentro de listener,
+								// pero aquí btnTorneo es local. Espera, necesito el listener.
+
+		// ... (rest of add calls) ...
+
+		// LISTENERS
+		// ... (other listeners) ...
+
+		btnTorneo.addActionListener(e -> {
+			dispose();
+			new VentanaTorneo();
+		});
 
 		getContentPane().add(pNorte, BorderLayout.NORTH);
 		getContentPane().add(pCentro, BorderLayout.CENTER);

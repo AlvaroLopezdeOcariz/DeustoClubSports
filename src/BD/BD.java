@@ -75,6 +75,13 @@ public class BD {
 				+ "    FOREIGN KEY (producto_id) REFERENCES Productos(id)"
 				+ ");";
 
+		String sqlCreateTableEquiposTorneo = "CREATE TABLE IF NOT EXISTS EquiposTorneo ("
+				+ "    id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "    nombre_equipo TEXT NOT NULL,"
+				+ "    numero_jugadores INTEGER NOT NULL,"
+				+ "    fecha_registro TEXT NOT NULL"
+				+ ");";
+
 		try (Connection conexion = DriverManager.getConnection(DB_URL);
 				Statement consulta = conexion.createStatement()) {
 			consulta.execute(sqlCreateTable);
@@ -85,6 +92,7 @@ public class BD {
 			consulta.execute(sqlCreateTableComprasCafeteria);
 			consulta.execute(sqlCreateTableInscripciones);
 			consulta.execute(sqlCreateTableRestock);
+			consulta.execute(sqlCreateTableEquiposTorneo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -508,6 +516,20 @@ public class BD {
 			e.printStackTrace();
 		}
 		return restocks;
+	}
+
+	public static void insertarEquipoTorneo(String nombreEquipo, int numJugadores, String fecha) {
+		String insert = "INSERT INTO EquiposTorneo (nombre_equipo, numero_jugadores, fecha_registro) VALUES (?, ?, ?)";
+		try (Connection conexion = DriverManager.getConnection(DB_URL);
+				PreparedStatement pstmt = conexion.prepareStatement(insert)) {
+			pstmt.setString(1, nombreEquipo);
+			pstmt.setInt(2, numJugadores);
+			pstmt.setString(3, fecha);
+			pstmt.executeUpdate();
+			System.out.println("Equipo inscrito exitosamente en el torneo.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
