@@ -27,11 +27,11 @@ public class HiloPublicidad extends Thread {
     public void run() {
         while (running) {
             try {
-                anchoPanel = panel.getWidth(); // Actualizar por si se redimensiona
+                anchoPanel = panel.getWidth();
                 if (anchoPanel == 0)
-                    anchoPanel = 800; // Valor por defecto si aún no es visible
+                    anchoPanel = 800;
 
-                x += 5; // Mover 5 píxeles a la derecha
+                x += 5;
                 if (x > anchoPanel) {
                     x = -label.getWidth(); // Reiniciar cuando sale por la derecha
                 }
@@ -40,7 +40,7 @@ public class HiloPublicidad extends Thread {
 
                 panel.repaint();
 
-                Thread.sleep(50); // Velocidad de actualización
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

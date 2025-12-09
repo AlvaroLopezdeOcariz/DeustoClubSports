@@ -95,14 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		pNorte.add(btnCarrito);
 		pNorte.add(btnInstalaciones);
 		pNorte.add(btnTienda);
-		pNorte.add(btnTorneo); // Variable local, necesita ser accesible o declarada final/efectivamente final
-								// si se usa dentro de listener,
-								// pero aquí btnTorneo es local. Espera, necesito el listener.
-
-		// ... (rest of add calls) ...
-
-		// LISTENERS
-		// ... (other listeners) ...
+		pNorte.add(btnTorneo);
 
 		btnTorneo.addActionListener(e -> {
 			dispose();

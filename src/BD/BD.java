@@ -532,4 +532,36 @@ public class BD {
 		}
 	}
 
+	public static ArrayList<Object[]> obtenerEquiposTorneo() {
+		ArrayList<Object[]> equipos = new ArrayList<>();
+		String query = "SELECT id, nombre_equipo, numero_jugadores, fecha_registro FROM EquiposTorneo";
+		try (Connection conexion = DriverManager.getConnection(DB_URL);
+				Statement stmt = conexion.createStatement();
+				ResultSet rs = stmt.executeQuery(query)) {
+			while (rs.next()) {
+				Object[] fila = new Object[4];
+				fila[0] = rs.getInt("id");
+				fila[1] = rs.getString("nombre_equipo");
+				fila[2] = rs.getInt("numero_jugadores");
+				fila[3] = rs.getString("fecha_registro");
+				equipos.add(fila);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return equipos;
+	}
+
+	public static void eliminarEquipoTorneo(int id) {
+		String delete = "DELETE FROM EquiposTorneo WHERE id=?";
+		try (Connection conexion = DriverManager.getConnection(DB_URL);
+				PreparedStatement pstmt = conexion.prepareStatement(delete)) {
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+			System.out.println("Equipo eliminado exitosamente del torneo.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

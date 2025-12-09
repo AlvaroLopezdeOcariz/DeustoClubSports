@@ -82,43 +82,29 @@ public class VentanaInicio extends JFrame {
 		lblLogo.setHorizontalAlignment(JLabel.CENTER);
 		pCentro.add(lblLogo, BorderLayout.CENTER);
 
-		// Añadir componentes
-		// pNorte.add(lblPrueba);
-
-		// Panel y label para el anuncio
-		JPanel pAnuncio = new JPanel(null); // Layout null para mover libremente
+		JPanel pAnuncio = new JPanel(null);
 		pAnuncio.setBackground(Color.WHITE);
 		pAnuncio.setPreferredSize(new java.awt.Dimension(800, 30));
 
 		JLabel lblAnuncio = new JLabel("¡Apuntate ahora a nuestro torneo!");
 		lblAnuncio.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 14));
 		lblAnuncio.setForeground(Color.RED);
-		lblAnuncio.setBounds(0, 5, 300, 20); // Posición inicial
+		lblAnuncio.setBounds(0, 5, 300, 20);
 
 		pAnuncio.add(lblAnuncio);
-
-		// Añadir al panel norte existente o crear uno nuevo
-		// Como pNorte ya existe y es FlowLayout, podemos añadir pAnuncio allí
-		// pero pNorte tiene botones. Mejor ponerlo en pSuperior en el centro?
-		// pSuperior ya tiene pNorte (EAST) y pNorteIzq (WEST).
-		// Vamos a añadirlo debajo de la barra superior.
 
 		JPanel pContenedorNorte = new JPanel(new BorderLayout());
 		pContenedorNorte.add(pSuperior, BorderLayout.NORTH);
 		pContenedorNorte.add(pAnuncio, BorderLayout.CENTER);
 
 		getContentPane().add(pContenedorNorte, BorderLayout.NORTH);
-		// getContentPane().add(pSuperior, BorderLayout.NORTH); // Reemplazado
 
 		pNorte.add(btnInciarSesion);
 		pNorte.add(btnResgitrar);
-		
 
-		// Iniciar hilo de publicidad
 		hilos.HiloPublicidad hilo = new hilos.HiloPublicidad(lblAnuncio, pAnuncio, "¡Apuntate ahora a nuestro torneo!");
 		hilo.start();
 
-		// Asegurar que se detenga el hilo al cerrar
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
