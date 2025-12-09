@@ -316,6 +316,7 @@ public class VentanaAdministrador extends JFrame {
 				JOptionPane.showMessageDialog(this, "Petición enviada:\n" + sb);
 				modeloRestock.clear();
 				restockList.clear();
+				BD.eliminarRestock();
 			}
 		});
 		pRestock.add(spList, BorderLayout.CENTER);

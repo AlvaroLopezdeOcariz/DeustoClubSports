@@ -42,6 +42,8 @@ public class ModeloTablaAdministrador extends javax.swing.table.AbstractTableMod
 			case 2:
 				return p.getStock();
 			case 3:
+				return p.getPrecio();
+			case 4:
 				return fecha;
 		}
 		return "";

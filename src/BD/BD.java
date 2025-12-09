@@ -460,13 +460,12 @@ public class BD {
 		}
 	}
 
-	public static void eliminarRestock(int restockId) {
-		String delete = "DELETE FROM Restock WHERE id=?";
+	public static void eliminarRestock() {
+		String delete = "DELETE FROM Restock";
 		try (Connection conexion = DriverManager.getConnection(DB_URL);
 				PreparedStatement pstmt = conexion.prepareStatement(delete)) {
-			pstmt.setInt(1, restockId);
 			pstmt.executeUpdate();
-			System.out.println("Restock eliminado exitosamente.");
+			System.out.println("Restocks eliminados exitosamente.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
