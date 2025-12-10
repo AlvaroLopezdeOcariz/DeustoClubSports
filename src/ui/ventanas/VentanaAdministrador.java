@@ -47,6 +47,8 @@ public class VentanaAdministrador extends JFrame {
 	private JTable tablaProductos;
 	private JTable tablaInscripciones;
 	private JTable tablaCafeteria;
+	private JTable tablaReservas;
+
 
 	// JList
 	private DefaultListModel<String> modeloRestock = new DefaultListModel<>();
@@ -108,10 +110,12 @@ public class VentanaAdministrador extends JFrame {
 		DefaultMutableTreeNode productos = new DefaultMutableTreeNode("Productos Vendidos");
 		DefaultMutableTreeNode inscripciones = new DefaultMutableTreeNode("Inscripciones al Club");
 		DefaultMutableTreeNode cafeteria = new DefaultMutableTreeNode("Compras Cafetería");
+		DefaultMutableTreeNode reservas = new DefaultMutableTreeNode("Reservas de Pistas");
 
 		raiz.add(productos);
 		raiz.add(inscripciones);
 		raiz.add(cafeteria);
+		raiz.add(reservas);
 
 		modeloArbol = new DefaultTreeModel(raiz);
 		arbol = new JTree(modeloArbol);
@@ -137,6 +141,9 @@ public class VentanaAdministrador extends JFrame {
 				case "Compras Cafetería":
 					cardLayout.show(pTablas, "Cafeteria");
 					break;
+				case "Reservas Instalaciones":
+				    cardLayout.show(pTablas, "Reservas");
+				    break;	
 
 			}
 		});
@@ -149,6 +156,7 @@ public class VentanaAdministrador extends JFrame {
 		pTablas.add(crearTablaProductos(), "Productos");
 		pTablas.add(crearTablaInscripciones(), "Inscripciones");
 		pTablas.add(crearTablaCafeteria(), "Cafeteria");
+		pTablas.add(crearTablaReservas(), "Reservas");
 	}
 
 	private JScrollPane crearTablaProductos() {
@@ -299,6 +307,30 @@ public class VentanaAdministrador extends JFrame {
 			}
 		});
 		return new JScrollPane(tablaCafeteria);
+	}
+	
+	private JScrollPane crearTablaReservas() {
+	    String[] columnas = { "ID", "Instalación", "Fecha", "Inicio", "Fin", "Asistentes", "Precio" };
+
+	    // Obtener datos de la BD
+	    ArrayList<Object[]> reservas = BD.obtenerReservas();
+	    Object[][] datos = new Object[reservas.size()][];
+
+	    for (int i = 0; i < reservas.size(); i++) {
+	        datos[i] = reservas.get(i);
+	    }
+
+	    DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	            return false;
+	        }
+	    };
+
+	    tablaReservas = new JTable(modelo);
+	    tablaReservas.getTableHeader().setReorderingAllowed(false);
+
+	    return new JScrollPane(tablaReservas);
 	}
 
 	private void crearPanelRestock() {

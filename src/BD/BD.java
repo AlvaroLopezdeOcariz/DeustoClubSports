@@ -81,6 +81,17 @@ public class BD {
 				+ "    numero_jugadores INTEGER NOT NULL,"
 				+ "    fecha_registro TEXT NOT NULL"
 				+ ");";
+		
+		String sqlCreateTableReservas = "CREATE TABLE IF NOT EXISTS Reservas ("
+		        + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		        + "instalacion TEXT NOT NULL,"
+		        + "fecha_reserva TEXT NOT NULL,"   // YYYY-MM-DD
+		        + "hora_inicio TEXT NOT NULL,"    // HH:MM
+		        + "hora_fin TEXT NOT NULL,"       // HH:MM
+		        + "asistentes INTEGER NOT NULL,"
+		        + "precio REAL NOT NULL"
+		        + ");";
+
 
 		try (Connection conexion = DriverManager.getConnection(DB_URL);
 				Statement consulta = conexion.createStatement()) {
@@ -93,6 +104,8 @@ public class BD {
 			consulta.execute(sqlCreateTableInscripciones);
 			consulta.execute(sqlCreateTableRestock);
 			consulta.execute(sqlCreateTableEquiposTorneo);
+			consulta.execute(sqlCreateTableReservas);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -516,6 +529,58 @@ public class BD {
 		}
 		return restocks;
 	}
+	
+	public static void insertarReserva(String instalacion, String fecha, String horaInicio,
+	        String horaFin, int asistentes, double precio) {
+
+	    String insert = "INSERT INTO Reservas (instalacion, fecha_reserva, hora_inicio, hora_fin, asistentes, precio) "
+	            + "VALUES (?, ?, ?, ?, ?, ?)";
+
+	    try (Connection conexion = DriverManager.getConnection(DB_URL);
+	            PreparedStatement pstmt = conexion.prepareStatement(insert)) {
+
+	        pstmt.setString(1, instalacion);
+	        pstmt.setString(2, fecha);
+	        pstmt.setString(3, horaInicio);
+	        pstmt.setString(4, horaFin);
+	        pstmt.setInt(5, asistentes);
+	        pstmt.setDouble(6, precio);
+
+	        pstmt.executeUpdate();
+	        System.out.println("Reserva insertada exitosamente.");
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public static ArrayList<Object[]> obtenerReservas() {
+	    ArrayList<Object[]> reservas = new ArrayList<>();
+	    String query = "SELECT id, instalacion, fecha_reserva, hora_inicio, hora_fin, asistentes, precio FROM Reservas ORDER BY id DESC";
+
+	    try (Connection conexion = DriverManager.getConnection(DB_URL);
+	         Statement stmt = conexion.createStatement();
+	         ResultSet rs = stmt.executeQuery(query)) {
+
+	        while (rs.next()) {
+	            Object[] fila = new Object[7];
+	            fila[0] = rs.getInt("id");
+	            fila[1] = rs.getString("instalacion");
+	            fila[2] = rs.getString("fecha_reserva");
+	            fila[3] = rs.getString("hora_inicio");
+	            fila[4] = rs.getString("hora_fin");
+	            fila[5] = rs.getInt("asistentes");
+	            fila[6] = String.format("%.2f€", rs.getDouble("precio"));
+	            reservas.add(fila);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return reservas;
+	}
+
 
 	public static void insertarEquipoTorneo(String nombreEquipo, int numJugadores, String fecha) {
 		String insert = "INSERT INTO EquiposTorneo (nombre_equipo, numero_jugadores, fecha_registro) VALUES (?, ?, ?)";

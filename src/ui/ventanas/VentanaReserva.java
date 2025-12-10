@@ -208,21 +208,38 @@ public class VentanaReserva extends JFrame {
             int horas = fin - inicio;
             double precio = horas * instalacion.getPrecioHora();
 
+            // --- FECHA REAL (Hoy / Mañana) ---
+            LocalDate fecha = LocalDate.now();
+            if ("Mañana".equals(comboDia.getSelectedItem())) {
+                fecha = fecha.plusDays(1);
+            }
+
+            int asistentes = (Integer) spAsistentes.getValue();
+
+            // --- GUARDAR EN BD ---
+            BD.insertarReserva(
+                    instalacion.getNombre(),
+                    fecha.toString(),
+                    inicioStr,
+                    finStr,
+                    asistentes,
+                    precio
+            );
+
             String mensaje = "Reserva realizada:\n" +
                     "Instalación: " + instalacion.getNombre() + "\n" +
-                    "Día: " + comboDia.getSelectedItem() + "\n" +
+                    "Día: " + comboDia.getSelectedItem() + " (" + fecha + ")\n" +
                     "Inicio: " + inicioStr + "\n" +
                     "Fin: " + finStr + "\n" +
                     "Horas: " + horas + "\n" +
                     "Precio: " + precio + " €\n" +
-                    "Asistentes: " + spAsistentes.getValue();
+                    "Asistentes: " + asistentes;
 
             HiloGeneral hiloReserva = new HiloGeneral(this, "Procesando Reserva", "Verificando disponibilidad...");
 
             new Thread(() -> {
-                hiloReserva.iniciar(); // Muestra la barra y procesa
+                hiloReserva.iniciar();
 
-                // Cuando termina, mostrar el mensaje de confirmación
                 SwingUtilities.invokeLater(() -> {
                     JOptionPane.showMessageDialog(this, mensaje,
                             "Reserva Confirmada", JOptionPane.INFORMATION_MESSAGE);
@@ -235,6 +252,7 @@ public class VentanaReserva extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al confirmar la reserva.");
         }
     }
+
 
     private void rellenarHoras() {
         try {
