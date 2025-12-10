@@ -3,6 +3,7 @@ package ui.ventanas;
 import dominio.*;
 import BD.BD;
 import hilos.HiloGeneral;
+import main.Main;
 import ui.modelos.*;
 
 import java.awt.BorderLayout;
@@ -137,12 +138,12 @@ public class VentanaPagoCuota extends JFrame {
 
         btnCancelar.addActionListener(e -> {
             dispose();
-            new VentanaInicio();
+            new Main();
         });
 
         btnCancelar.addActionListener(e -> {
             dispose();
-            new VentanaInicio();
+            new Main();
         });
 
         actualizarTotalSimple();
@@ -158,7 +159,7 @@ public class VentanaPagoCuota extends JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
-                    new VentanaInicio();
+                    new Main();
                 }
 
             }

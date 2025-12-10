@@ -3,6 +3,7 @@ package ui.ventanas;
 import dominio.*;
 import BD.BD;
 import hilos.HiloGeneral;
+import main.Main;
 import ui.modelos.*;
 
 import java.awt.BorderLayout;
@@ -164,7 +165,7 @@ public class Registro extends JFrame {
 
         btnCancelar.addActionListener((e) -> {
             dispose();
-            new VentanaInicio();
+            new Main();
         });
 
         txtCorreo.addFocusListener(new FocusListener() {

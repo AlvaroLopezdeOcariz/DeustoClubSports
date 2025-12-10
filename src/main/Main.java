@@ -1,9 +1,13 @@
-package ui.ventanas;
+package main;
 
 import dominio.*;
 import BD.BD;
 import hilos.HiloGeneral;
 import ui.modelos.*;
+import ui.ventanas.Registro;
+import ui.ventanas.VentanaAdministrador;
+import ui.ventanas.VentanaCafeteria;
+import ui.ventanas.VentanaPrincipal;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,7 +25,7 @@ import javax.swing.JTextField;
 
 import BD.BD;
 
-public class VentanaInicio extends JFrame {
+public class Main extends JFrame {
 	/**
 	 * 
 	 */
@@ -30,7 +34,7 @@ public class VentanaInicio extends JFrame {
 	private JLabel lblPrueba, lblLogo;
 	private JButton btnInciarSesion, btnResgitrar, btnCafeteria;
 
-	public VentanaInicio() {
+	public Main() {
 		super();
 
 		// Especificaciones de la ventana
@@ -183,6 +187,6 @@ public class VentanaInicio extends JFrame {
 		baseDatos.InicializarBD();
 		baseDatos.insertarProductos();
 		baseDatos.insertarUsuarios();
-		new VentanaInicio();
+		new Main();
 	}
 }
