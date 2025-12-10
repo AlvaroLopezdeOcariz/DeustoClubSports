@@ -159,7 +159,7 @@ public class VentanaCafeteria extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new VentanaInicio();
+                new VentanaPrincipal();
 
             }
         });
