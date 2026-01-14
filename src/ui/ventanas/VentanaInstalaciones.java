@@ -79,9 +79,15 @@ public class VentanaInstalaciones extends JFrame {
 
         // Panel superior
         JPanel top = new JPanel(new BorderLayout());
+        top.setBackground(Color.WHITE);
         top.add(titulo, BorderLayout.WEST);
 
         JButton btnVolver = new JButton("Volver atrás");
+        btnVolver.setBackground(new Color(0, 35, 102));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnVolver.setFocusPainted(false);
+
         btnVolver.addActionListener(e -> {
             dispose();
             new VentanaPrincipal().setVisible(true); // vuelvo a la ventana Principal
@@ -94,6 +100,8 @@ public class VentanaInstalaciones extends JFrame {
 
         // Centro: grid 3 por fila
         grid = new JPanel(new GridLayout(0, 3, 16, 16));
+        grid.setBackground(Color.WHITE);
+
         JScrollPane sp = new JScrollPane(grid);
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(sp, BorderLayout.CENTER);
@@ -180,6 +188,7 @@ public class VentanaInstalaciones extends JFrame {
 
             // Centro -> imagen y datos
             JPanel centro = new JPanel(new BorderLayout(8, 8));
+            centro.setBackground(Color.WHITE);
 
             // Imagen arriba
             JLabel lblImg = new JLabel("", SwingConstants.CENTER);
@@ -193,6 +202,8 @@ public class VentanaInstalaciones extends JFrame {
 
             // Datos en grid
             JPanel datos = new JPanel(new GridLayout(0, 2, 6, 6));
+            datos.setBackground(Color.WHITE);
+
             datos.add(new JLabel("Deporte: " + inst.getDeporte()));
             datos.add(new JLabel("Medidas: " + inst.getMedidas()));
             datos.add(new JLabel("Apertura: " + inst.getApertura()));
@@ -205,8 +216,19 @@ public class VentanaInstalaciones extends JFrame {
 
             // Abajo: botones
             JPanel sur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            sur.setBackground(Color.WHITE);
+
             JButton btnReservar = new JButton("Reservar");
+            btnReservar.setBackground(new Color(0, 35, 102));
+            btnReservar.setForeground(Color.WHITE);
+            btnReservar.setFont(new Font("SansSerif", Font.BOLD, 12));
+            btnReservar.setFocusPainted(false);
+
             JButton btnCerrar = new JButton("Cerrar");
+            btnCerrar.setBackground(new Color(178, 34, 34)); // Firebrick
+            btnCerrar.setForeground(Color.WHITE);
+            btnCerrar.setFont(new Font("SansSerif", Font.BOLD, 12));
+            btnCerrar.setFocusPainted(false);
 
             // Listener Reservar -> pendiente de implementar
             btnReservar.addActionListener(e -> {

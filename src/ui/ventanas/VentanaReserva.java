@@ -31,20 +31,28 @@ public class VentanaReserva extends JFrame {
 
         JPanel pContent = new JPanel(new BorderLayout(10, 10));
         pContent.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        pContent.setBackground(Color.WHITE);
         setContentPane(pContent);
 
         // 1. Panel superior con título
         JPanel pNorte = new JPanel(new BorderLayout());
+        pNorte.setBackground(Color.WHITE);
+
         JLabel lblTitulo = new JLabel("Reserva de instalación", SwingConstants.LEFT);
         lblTitulo.setFont(lblTitulo.getFont().deriveFont(Font.BOLD, 20f));
+        lblTitulo.setForeground(new Color(0, 35, 102));
+
         JLabel lblInstalacion = new JLabel(inst.getNombre(), SwingConstants.RIGHT);
         lblInstalacion.setFont(lblInstalacion.getFont().deriveFont(Font.BOLD, 16f));
+        lblInstalacion.setForeground(new Color(0, 35, 102));
+
         pNorte.add(lblTitulo, BorderLayout.WEST);
         pNorte.add(lblInstalacion, BorderLayout.EAST);
         add(pNorte, BorderLayout.NORTH);
 
         // 2. Panel central -> izquierda info Instalación, derecha formulario
         JPanel pCentro = new JPanel(new GridLayout(1, 2, 10, 0));
+        pCentro.setBackground(Color.WHITE);
         pCentro.add(crearPanelInfoInstalacion());
         pCentro.add(crearPanelFormulario());
         add(pCentro, BorderLayout.CENTER);
@@ -63,6 +71,7 @@ public class VentanaReserva extends JFrame {
     // Creo el panel con la información de la instalación
     private JPanel crearPanelInfoInstalacion() {
         JPanel p = new JPanel(new BorderLayout(5, 5));
+        p.setBackground(Color.WHITE);
 
         // Imagen
         JLabel lblImagen = new JLabel("", SwingConstants.CENTER);
@@ -76,6 +85,8 @@ public class VentanaReserva extends JFrame {
 
         // Datos
         JPanel pDatos = new JPanel(new GridLayout(4, 1, 5, 5));
+        pDatos.setBackground(Color.WHITE);
+
         pDatos.add(new JLabel("Deporte: " + instalacion.getDeporte()));
         pDatos.add(new JLabel("Medidas: " + instalacion.getMedidas()));
         pDatos.add(new JLabel("Apertura: " + instalacion.getApertura()));
@@ -108,10 +119,12 @@ public class VentanaReserva extends JFrame {
 
     private JPanel crearPanelFormulario() {
         JPanel p = new JPanel();
+        p.setBackground(Color.WHITE);
         p.setLayout(new GridLayout(5, 2, 5, 5));
 
         p.add(new JLabel("Día:"));
         comboDia = new JComboBox<>();
+        comboDia.setBackground(Color.WHITE);
 
         comboDia.addItem("Hoy");
         comboDia.addItem("Mañana");
@@ -120,12 +133,14 @@ public class VentanaReserva extends JFrame {
 
         p.add(new JLabel("Hora inicio:"));
         comboHoraInicio = new JComboBox<>();
+        comboHoraInicio.setBackground(Color.WHITE);
         comboHoraInicio.addActionListener(e -> recalcularPrecio());
 
         p.add(comboHoraInicio);
 
         p.add(new JLabel("Hora fin:"));
         comboHoraFin = new JComboBox<>();
+        comboHoraFin.setBackground(Color.WHITE);
         comboHoraFin.addActionListener(e -> recalcularPrecio());
         p.add(comboHoraFin);
 
@@ -147,13 +162,26 @@ public class VentanaReserva extends JFrame {
 
     private JPanel crearPanelInferior() {
         JPanel p = new JPanel(new BorderLayout());
+        p.setBackground(Color.WHITE);
 
         lblResumen = new JLabel("Selecciona día y horas para ver el resumen.");
+        lblResumen.setForeground(new Color(0, 35, 102));
         p.add(lblResumen, BorderLayout.CENTER);
 
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        botones.setBackground(Color.WHITE);
+
         JButton btnConfirmar = new JButton("Confirmar reserva");
+        btnConfirmar.setBackground(new Color(0, 35, 102));
+        btnConfirmar.setForeground(Color.WHITE);
+        btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnConfirmar.setFocusPainted(false);
+
         JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(new Color(178, 34, 34)); // Firebrick
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnCancelar.setFocusPainted(false);
 
         btnConfirmar.addActionListener(e -> confirmarReserva());
         btnCancelar.addActionListener(e -> {
@@ -223,8 +251,7 @@ public class VentanaReserva extends JFrame {
                     inicioStr,
                     finStr,
                     asistentes,
-                    precio
-            );
+                    precio);
 
             String mensaje = "Reserva realizada:\n" +
                     "Instalación: " + instalacion.getNombre() + "\n" +
@@ -252,7 +279,6 @@ public class VentanaReserva extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al confirmar la reserva.");
         }
     }
-
 
     private void rellenarHoras() {
         try {

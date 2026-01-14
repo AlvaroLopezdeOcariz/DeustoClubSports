@@ -53,6 +53,7 @@ public class VentanaCafeteria extends JFrame {
     // Apartado de crear los productos
     private JPanel crearPanelProductos() {
         JPanel p = new JPanel(new BorderLayout(5, 5));
+        p.setBackground(Color.WHITE);
         p.setPreferredSize(new Dimension(260, 0));
 
         // Título
@@ -72,7 +73,14 @@ public class VentanaCafeteria extends JFrame {
 
         // Botón para añadir al carrito
         JPanel acciones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        acciones.setBackground(Color.WHITE);
+
         JButton btnAdd = new JButton("Añadir");
+        btnAdd.setBackground(new Color(0, 35, 102));
+        btnAdd.setForeground(Color.WHITE);
+        btnAdd.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnAdd.setFocusPainted(false);
+
         btnAdd.addActionListener(e -> anadirSeleccionado());
         acciones.add(btnAdd);
 
@@ -84,6 +92,7 @@ public class VentanaCafeteria extends JFrame {
     // Apartado de crear el carrito
     private JPanel crearPanelCarrito() {
         JPanel p = new JPanel(new BorderLayout(5, 5));
+        p.setBackground(Color.WHITE);
 
         // Título
         JLabel titulo = new JLabel("Carrito");
@@ -117,10 +126,27 @@ public class VentanaCafeteria extends JFrame {
 
         // Botones del carrito
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        botones.setBackground(Color.WHITE);
+
         JButton btnMas = new JButton("+");
+        btnMas.setBackground(new Color(0, 35, 102));
+        btnMas.setForeground(Color.WHITE);
+        btnMas.setFont(new Font("SansSerif", Font.BOLD, 12));
+
         JButton btnMenos = new JButton("–");
+        btnMenos.setBackground(new Color(0, 35, 102));
+        btnMenos.setForeground(Color.WHITE);
+        btnMenos.setFont(new Font("SansSerif", Font.BOLD, 12));
+
         JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBackground(new Color(178, 34, 34)); // Firebrick
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("SansSerif", Font.BOLD, 12));
+
         JButton btnVaciar = new JButton("Vaciar");
+        btnVaciar.setBackground(new Color(178, 34, 34));
+        btnVaciar.setForeground(Color.WHITE);
+        btnVaciar.setFont(new Font("SansSerif", Font.BOLD, 12));
 
         // Listeners de los botones
         btnMas.addActionListener(e -> modificarCantidad(+1)); // aumentar cantidad
@@ -144,6 +170,7 @@ public class VentanaCafeteria extends JFrame {
     // Apartado inferior (total y pagar)
     private JPanel crearPanelInferior() {
         JPanel p = new JPanel(new BorderLayout());
+        p.setBackground(Color.WHITE);
 
         // Etiqueta del total
         lblTotal = new JLabel("Total: 0.00 €");
@@ -152,8 +179,18 @@ public class VentanaCafeteria extends JFrame {
 
         // Botón de pagar
         JButton btnPagar = new JButton("Pagar");
+        btnPagar.setBackground(new Color(0, 35, 102));
+        btnPagar.setForeground(Color.WHITE);
+        btnPagar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnPagar.setFocusPainted(false);
+
         btnPagar.addActionListener(e -> pagar());
         JButton btnVolver = new JButton("Volver atrás");
+        btnVolver.setBackground(new Color(0, 35, 102));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnVolver.setFocusPainted(false);
+
         btnVolver.addActionListener(new ActionListener() {
 
             @Override
@@ -164,6 +201,7 @@ public class VentanaCafeteria extends JFrame {
             }
         });
         JPanel btnRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        btnRight.setBackground(Color.WHITE);
         btnRight.add(btnPagar);
         btnRight.add(btnVolver);
         p.add(btnRight, BorderLayout.EAST);

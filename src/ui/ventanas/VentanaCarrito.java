@@ -28,6 +28,7 @@ public class VentanaCarrito extends JFrame {
 
         JLabel lblTitulo = new JLabel("Carrito de Compras", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitulo.setForeground(new Color(0, 35, 102)); // Navy Blue
 
         lblTitulo.setBorder(BorderStyle(10, 0, 10, 0));
         add(lblTitulo, BorderLayout.NORTH);
@@ -57,21 +58,27 @@ public class VentanaCarrito extends JFrame {
         // ---------------- PANEL INFERIOR ----------------
         JPanel panelInferior = new JPanel(new BorderLayout());
         panelInferior.setBorder(BorderStyle(10, 10, 10, 10));
+        panelInferior.setBackground(Color.WHITE);
 
         // Total del carrito
         JLabel lblTotal = new JLabel(
                 "Total: €" + String.format("%.2f", carrito.calcularTotal()),
                 SwingConstants.RIGHT);
         lblTotal.setFont(new Font("Arial", Font.BOLD, 18));
+        lblTotal.setForeground(new Color(0, 35, 102));
 
         panelInferior.add(lblTotal, BorderLayout.NORTH);
 
         // ---------------- BOTONES ----------------
         JPanel panelBotones = new JPanel(new GridLayout(1, 3, 10, 0));
+        panelBotones.setBackground(Color.WHITE);
 
         // Botón limpiar
         JButton btnLimpiar = new JButton("Limpiar Carrito");
         btnLimpiar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnLimpiar.setBackground(new Color(178, 34, 34)); // Firebrick
+        btnLimpiar.setForeground(Color.WHITE);
+        btnLimpiar.setFocusPainted(false);
 
         btnLimpiar.addActionListener(e -> {
             carrito.clear();
@@ -84,6 +91,9 @@ public class VentanaCarrito extends JFrame {
         // Botón volver
         JButton btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
+        btnVolver.setBackground(new Color(0, 35, 102));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFocusPainted(false);
 
         btnVolver.addActionListener(e -> {
             dispose();
@@ -94,6 +104,9 @@ public class VentanaCarrito extends JFrame {
         // Botón pagar
         JButton btnPagar = new JButton("Pagar");
         btnPagar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnPagar.setBackground(new Color(0, 35, 102));
+        btnPagar.setForeground(Color.WHITE);
+        btnPagar.setFocusPainted(false);
 
         btnPagar.addActionListener(e -> {
             if (carrito.getItems().isEmpty()) {
@@ -123,13 +136,14 @@ public class VentanaCarrito extends JFrame {
         // Etiqueta de título
         JLabel lblTituloPago = new JLabel("Detalles de Pago", SwingConstants.CENTER);
         lblTituloPago.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTituloPago.setForeground(new Color(50, 50, 150));
+        lblTituloPago.setForeground(new Color(0, 35, 102));
         lblTituloPago.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         ventanaPago.add(lblTituloPago, BorderLayout.NORTH);
 
         // Panel de campos
         JPanel panelCampos = new JPanel(new GridLayout(4, 2, 10, 10));
         panelCampos.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        panelCampos.setBackground(Color.WHITE);
 
         JLabel lblTarjeta = new JLabel("Número de Tarjeta:");
         JTextField txtTarjeta = new JTextField();
@@ -150,15 +164,16 @@ public class VentanaCarrito extends JFrame {
         // Panel inferior para el botón de confirmación
         JPanel panelInferior = new JPanel(new BorderLayout());
         panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelInferior.setBackground(Color.WHITE);
 
         JLabel lblTotalPago = new JLabel("Total a Pagar: €" + String.format("%.2f", carrito.calcularTotal()));
         lblTotalPago.setFont(new Font("Arial", Font.BOLD, 16));
         lblTotalPago.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTotalPago.setForeground(new Color(50, 50, 150));
+        lblTotalPago.setForeground(new Color(0, 35, 102));
 
         JButton btnConfirmar = new JButton("Confirmar Pago");
         btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnConfirmar.setBackground(new Color(50, 200, 50));
+        btnConfirmar.setBackground(new Color(0, 35, 102)); // Navy Blue
         btnConfirmar.setForeground(Color.WHITE);
         btnConfirmar.addActionListener(e -> { // Ayudado de IAG en este listener (ChatGPT)
             if (txtTarjeta.getText().isEmpty() || txtFecha.getText().isEmpty() || txtCVV.getText().isEmpty()) {

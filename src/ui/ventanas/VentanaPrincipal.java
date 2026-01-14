@@ -36,28 +36,37 @@ public class VentanaPrincipal extends JFrame {
 		Carrito carrito = Carrito.getInstance();
 		// Panel Norte
 		pNorte = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+		pNorte.setBackground(Color.WHITE); // Fondo blanco
 		pNorte.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+		Font fontBotones = new Font("SansSerif", Font.BOLD, 14);
+		Color colorBoton = new Color(0, 35, 102); // Azul Universidad
 
 		btnCafeteria = new JButton("CAFETERÍA");
 		btnCafeteria.setFocusPainted(false);
-		btnCafeteria.setBackground(new Color(230, 230, 230));
-		btnCafeteria.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnCafeteria.setBackground(colorBoton);
+		btnCafeteria.setForeground(Color.WHITE);
+		btnCafeteria.setFont(fontBotones);
 
 		btnInstalaciones = new JButton("INSTALACIONES");
-		btnInstalaciones.setBounds(10, 10, 100, 30);
+		// btnInstalaciones.setBounds(10, 10, 100, 30); // Layout FlowLayout ignora
+		// bounds
 		btnInstalaciones.setFocusPainted(false);
-		btnInstalaciones.setBackground(new Color(230, 230, 230));
-		btnInstalaciones.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnInstalaciones.setBackground(colorBoton);
+		btnInstalaciones.setForeground(Color.WHITE);
+		btnInstalaciones.setFont(fontBotones);
 
 		btnTienda = new JButton("TIENDA");
 		btnTienda.setFocusPainted(false);
-		btnTienda.setBackground(new Color(230, 230, 230));
-		btnTienda.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnTienda.setBackground(colorBoton);
+		btnTienda.setForeground(Color.WHITE);
+		btnTienda.setFont(fontBotones);
 
 		btnCarrito = new JButton("CARRITO");
 		btnCarrito.setFocusPainted(false);
-		btnCarrito.setBackground(new Color(230, 230, 230));
-		btnCarrito.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		btnCarrito.setBackground(colorBoton);
+		btnCarrito.setForeground(Color.WHITE);
+		btnCarrito.setFont(fontBotones);
 
 		JButton btnTorneo = new JButton("TORNEO");
 		btnTorneo.setFocusPainted(false);

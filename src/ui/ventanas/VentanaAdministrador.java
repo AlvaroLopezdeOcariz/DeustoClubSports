@@ -7,7 +7,9 @@ import ui.modelos.*;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -48,7 +50,6 @@ public class VentanaAdministrador extends JFrame {
 	private JTable tablaInscripciones;
 	private JTable tablaCafeteria;
 	private JTable tablaReservas;
-
 
 	// JList
 	private DefaultListModel<String> modeloRestock = new DefaultListModel<>();
@@ -93,8 +94,14 @@ public class VentanaAdministrador extends JFrame {
 	private void crearPanelNorte() {
 		// FlowLayout.LEFT alinea el botón a la izquierda
 		pNorte = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pNorte.setBackground(Color.WHITE);
 
 		btnVolver = new JButton("Volver atrás");
+		btnVolver.setBackground(new Color(0, 35, 102));
+		btnVolver.setForeground(Color.WHITE);
+		btnVolver.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnVolver.setFocusPainted(false);
+
 		btnVolver.addActionListener(e -> {
 			dispose();
 			new VentanaPrincipal();
@@ -142,8 +149,8 @@ public class VentanaAdministrador extends JFrame {
 					cardLayout.show(pTablas, "Cafeteria");
 					break;
 				case "Reservas Instalaciones":
-				    cardLayout.show(pTablas, "Reservas");
-				    break;	
+					cardLayout.show(pTablas, "Reservas");
+					break;
 
 			}
 		});
@@ -308,35 +315,41 @@ public class VentanaAdministrador extends JFrame {
 		});
 		return new JScrollPane(tablaCafeteria);
 	}
-	
+
 	private JScrollPane crearTablaReservas() {
-	    String[] columnas = { "ID", "Instalación", "Fecha", "Inicio", "Fin", "Asistentes", "Precio" };
+		String[] columnas = { "ID", "Instalación", "Fecha", "Inicio", "Fin", "Asistentes", "Precio" };
 
-	    // Obtener datos de la BD
-	    ArrayList<Object[]> reservas = BD.obtenerReservas();
-	    Object[][] datos = new Object[reservas.size()][];
+		// Obtener datos de la BD
+		ArrayList<Object[]> reservas = BD.obtenerReservas();
+		Object[][] datos = new Object[reservas.size()][];
 
-	    for (int i = 0; i < reservas.size(); i++) {
-	        datos[i] = reservas.get(i);
-	    }
+		for (int i = 0; i < reservas.size(); i++) {
+			datos[i] = reservas.get(i);
+		}
 
-	    DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
-	        @Override
-	        public boolean isCellEditable(int row, int column) {
-	            return false;
-	        }
-	    };
+		DefaultTableModel modelo = new DefaultTableModel(datos, columnas) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 
-	    tablaReservas = new JTable(modelo);
-	    tablaReservas.getTableHeader().setReorderingAllowed(false);
+		tablaReservas = new JTable(modelo);
+		tablaReservas.getTableHeader().setReorderingAllowed(false);
 
-	    return new JScrollPane(tablaReservas);
+		return new JScrollPane(tablaReservas);
 	}
 
 	private void crearPanelRestock() {
 		pRestock = new JPanel(new BorderLayout());
+		pRestock.setBackground(Color.WHITE);
 		JScrollPane spList = new JScrollPane(lRestock);
 		btnPeticion = new JButton("Enviar petición de restock");
+		btnPeticion.setBackground(new Color(0, 35, 102));
+		btnPeticion.setForeground(Color.WHITE);
+		btnPeticion.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnPeticion.setFocusPainted(false);
+
 		btnPeticion.addActionListener(e -> {
 			if (modeloRestock.getSize() == 0) {
 				JOptionPane.showMessageDialog(this, "La lista está vacía.");

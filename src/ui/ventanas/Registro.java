@@ -47,18 +47,26 @@ public class Registro extends JFrame {
 
         // Creación de paneles
         pSur = new JPanel();
+        pSur.setBackground(Color.WHITE);
         // fila extra se usará para el mensaje de error
         pCentro = new JPanel(new GridLayout(8, 2, 10, 10));
+        pCentro.setBackground(Color.WHITE);
         pFecha = new JPanel(new GridLayout(1, 3, 5, 5));
+        pFecha.setBackground(Color.WHITE);
 
         getContentPane().add(pCentro, BorderLayout.CENTER);
         getContentPane().add(pSur, BorderLayout.SOUTH);
 
         // Creación de componentes
         btnAceptar = new JButton("Aceptar");
-        btnAceptar.setBackground(Color.GREEN);
+        btnAceptar.setBackground(new Color(0, 35, 102)); // Navy Blue
+        btnAceptar.setForeground(Color.WHITE);
+        btnAceptar.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+
         btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBackground(Color.RED);
+        btnCancelar.setBackground(new Color(139, 0, 0)); // Dark Red
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
 
         lblNombre = new JLabel("Nombre:", JLabel.CENTER);
         lblApellido = new JLabel("Apellido:", JLabel.CENTER);

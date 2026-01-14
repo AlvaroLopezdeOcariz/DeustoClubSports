@@ -6,6 +6,7 @@ import hilos.HiloGeneral;
 import ui.modelos.*;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -32,7 +33,11 @@ public class VentanaCompraProducto extends JFrame {
 		// Título
 		JLabel lblTitulo = new JLabel("Producto seleccionado:", JLabel.CENTER);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblTitulo.setForeground(new Color(0, 35, 102));
+
 		JPanel panelCentro = new JPanel(new BorderLayout());
+		panelCentro.setBackground(Color.WHITE);
+
 		// Datos del producto
 		JLabel lblProducto = new JLabel(
 				"<html><center>" +
@@ -45,6 +50,8 @@ public class VentanaCompraProducto extends JFrame {
 
 		// Botón comprar
 		JPanel panelSpinner = new JPanel();
+		panelSpinner.setBackground(Color.WHITE);
+
 		JLabel lblCantidad = new JLabel("Cantidad: ");
 
 		JSpinner spinnerCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
@@ -57,6 +64,11 @@ public class VentanaCompraProducto extends JFrame {
 
 		// Botones
 		JButton btnComprar = new JButton("Confirmar compra");
+		btnComprar.setBackground(new Color(0, 35, 102));
+		btnComprar.setForeground(Color.WHITE);
+		btnComprar.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnComprar.setFocusPainted(false);
+
 		btnComprar.addActionListener(e -> {
 
 			int cantidad = (int) spinnerCantidad.getValue();
@@ -81,9 +93,16 @@ public class VentanaCompraProducto extends JFrame {
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(new Color(178, 34, 34)); // Firebrick
+		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnCancelar.setFocusPainted(false);
+
 		btnCancelar.addActionListener(e -> dispose());
 
 		JPanel panelBotones = new JPanel();
+		panelBotones.setBackground(Color.WHITE);
+
 		panelBotones.add(btnComprar);
 		panelBotones.add(btnCancelar);
 

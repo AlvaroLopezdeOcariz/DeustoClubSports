@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BD.BD;
+import recursividad.GeneradorTorneo;
 
 public class VentanaTorneo extends JFrame {
 
@@ -32,7 +34,7 @@ public class VentanaTorneo extends JFrame {
     private JPanel pOeste, pSur, pCentro;
     private JTextField txtNombreEquipo;
     private JSpinner spNumeroJugadores;
-    private JButton btnRegistrar, btnVolver, btnEliminar;
+    private JButton btnRegistrar, btnVolver, btnEliminar, btnGenerarCruces;
     private JTable tablaEquipos;
     private DefaultTableModel modeloTabla;
 
@@ -46,7 +48,8 @@ public class VentanaTorneo extends JFrame {
         pOeste = new JPanel(new GridLayout(6, 1, 10, 10));
         pOeste.setBorder(BorderFactory.createCompoundBorder(
                 new EmptyBorder(20, 20, 20, 20),
-                new TitledBorder("Registrar Nuevo Equipo")));
+                new TitledBorder(null, "Registrar Nuevo Equipo", TitledBorder.LEADING, TitledBorder.TOP, null,
+                        new Color(0, 35, 102))));
         pOeste.setBackground(Color.WHITE);
         pOeste.setPreferredSize(new Dimension(300, 0));
 
@@ -57,8 +60,10 @@ public class VentanaTorneo extends JFrame {
         spNumeroJugadores = new JSpinner(new SpinnerNumberModel(5, 1, 25, 1));
 
         btnRegistrar = new JButton("REGISTRAR EQUIPO");
-        btnRegistrar.setBackground(new Color(60, 179, 113));
+        btnRegistrar.setBackground(new Color(0, 35, 102)); // Navy Blue
         btnRegistrar.setForeground(Color.WHITE);
+        btnRegistrar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnRegistrar.setFocusPainted(false);
 
         pOeste.add(lblNombre);
         pOeste.add(txtNombreEquipo);
@@ -89,14 +94,27 @@ public class VentanaTorneo extends JFrame {
 
         // Botones ---
         pSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        pSur.setBackground(new Color(240, 240, 240));
+        pSur.setBackground(Color.WHITE);
 
         btnEliminar = new JButton("ELIMINAR SELECCIONADO");
-        btnEliminar.setBackground(new Color(220, 20, 60));
+        btnEliminar.setBackground(new Color(178, 34, 34)); // Firebrick
         btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnEliminar.setFocusPainted(false);
+
+        btnGenerarCruces = new JButton("GENERAR CRUCES");
+        btnGenerarCruces.setBackground(new Color(0, 35, 102)); // Navy Blue
+        btnGenerarCruces.setForeground(Color.WHITE);
+        btnGenerarCruces.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnGenerarCruces.setFocusPainted(false);
 
         btnVolver = new JButton("VOLVER AL MENÚ");
+        btnVolver.setBackground(new Color(0, 35, 102));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnVolver.setFocusPainted(false);
 
+        pSur.add(btnGenerarCruces);
         pSur.add(btnEliminar);
         pSur.add(btnVolver);
 
@@ -116,6 +134,10 @@ public class VentanaTorneo extends JFrame {
 
         btnEliminar.addActionListener(e -> {
             eliminarEquipo();
+        });
+
+        btnGenerarCruces.addActionListener(e -> {
+            generarCruces();
         });
 
         setVisible(true);
@@ -168,5 +190,28 @@ public class VentanaTorneo extends JFrame {
             cargarTabla();
             JOptionPane.showMessageDialog(this, "Equipo eliminado.", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    private void generarCruces() {
+        if (modeloTabla.getRowCount() < 2) {
+            JOptionPane.showMessageDialog(this, "Se necesitan al menos 2 equipos para generar cruces.", "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        ArrayList<String> nombresEquipos = new ArrayList<>();
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            nombresEquipos.add((String) modeloTabla.getValueAt(i, 1));
+        }
+
+        java.util.List<String> cruces = GeneradorTorneo.generarEmparejamientos(nombresEquipos);
+
+        StringBuilder msj = new StringBuilder("Cruces Generados (Primera Ronda):\n\n");
+        for (String cruce : cruces) {
+            msj.append(cruce).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, msj.toString(), "Torneo - Emparejamientos",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

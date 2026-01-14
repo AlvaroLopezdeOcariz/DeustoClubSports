@@ -47,7 +47,9 @@ public class VentanaPagoCuota extends JFrame {
 
         // Creación de paneles
         pCentro = new JPanel(new GridLayout(5, 2, 10, 10));
+        pCentro.setBackground(Color.WHITE);
         pSur = new JPanel();
+        pSur.setBackground(Color.WHITE);
 
         getContentPane().add(pCentro, BorderLayout.CENTER);
         getContentPane().add(pSur, BorderLayout.SOUTH);
@@ -61,6 +63,7 @@ public class VentanaPagoCuota extends JFrame {
                 "Estudiante (30€/mes)",
                 "Senior +65 (35€/mes)"
         });
+        cbTipoSocio.setBackground(Color.WHITE);
 
         // Frecuencia pago
         lblFrecuencia = new JLabel("Frecuencia:", JLabel.RIGHT);
@@ -70,11 +73,16 @@ public class VentanaPagoCuota extends JFrame {
                 "Semestral (-10%)",
                 "Anual (-15%)"
         });
+        cbFrecuencia.setBackground(Color.WHITE);
 
         JLabel lblEntrada = new JLabel("Cuota de entrada:", JLabel.RIGHT);
         JPanel pEntrada = new JPanel();
+        pEntrada.setBackground(Color.WHITE);
+
         rbConEntrada = new JRadioButton("Sí (150€)");
+        rbConEntrada.setBackground(Color.WHITE);
         rbSinEntrada = new JRadioButton("No", true);
+        rbSinEntrada.setBackground(Color.WHITE);
         bgEntrada = new ButtonGroup();
 
         // Añadir la cuota d eentrada
@@ -90,16 +98,27 @@ public class VentanaPagoCuota extends JFrame {
                 "Transferencia",
                 "Domiciliación"
         });
+        cbMetodoPago.setBackground(Color.WHITE);
 
         // Total
         lblTotalSimple = new JLabel("Total: 0.00€", JLabel.CENTER);
         lblTotalSimple.setFont(new Font("Arial", Font.BOLD, 20));
-        lblTotalSimple.setForeground(new Color(0, 153, 0));
+        lblTotalSimple.setForeground(new Color(0, 35, 102)); // Navy Blue
         pSur.add(lblTotalSimple);
 
         // Botones
         btnPagar = new JButton("Pagar");
+        btnPagar.setBackground(new Color(0, 35, 102));
+        btnPagar.setForeground(Color.WHITE);
+        btnPagar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnPagar.setFocusPainted(false);
+
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(new Color(178, 34, 34)); // Firebrick
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnCancelar.setFocusPainted(false);
+
         pSur.add(btnPagar);
         pSur.add(btnCancelar);
 

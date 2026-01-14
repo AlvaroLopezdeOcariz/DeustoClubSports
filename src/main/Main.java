@@ -12,6 +12,7 @@ import ui.ventanas.VentanaPrincipal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -58,9 +59,25 @@ public class Main extends JFrame {
 		pNorteIzq = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		pNorteIzq.setBackground(Color.WHITE);
 		// lblPrueba = new JLabel("Bienvenidos");
+
+		Font fontBotones = new Font("SansSerif", Font.BOLD, 14);
+		Color colorBoton = new Color(0, 35, 102); // Azul Universidad / Navy Potente
+
 		btnInciarSesion = new JButton("Iniciar Sesión");
-		btnResgitrar = new JButton("Resgistrarse");
+		btnInciarSesion.setBackground(colorBoton);
+		btnInciarSesion.setForeground(Color.WHITE);
+		btnInciarSesion.setFont(fontBotones);
+		btnInciarSesion.setFocusPainted(false);
+
+		btnResgitrar = new JButton("Registrarse");
+		btnResgitrar.setBackground(colorBoton);
+		btnResgitrar.setForeground(Color.WHITE);
+		btnResgitrar.setFont(fontBotones);
+		btnResgitrar.setFocusPainted(false);
+
 		btnCafeteria = new JButton("Cafetería");
+		// Si se usara, también estilizarlo, pero parece no estar añadido al panel norte
+		// en el bloque original visible
 
 		pSuperior = new JPanel(new BorderLayout());
 		pSuperior.setBackground(Color.WHITE);

@@ -38,9 +38,9 @@ public class VentanaTienda extends JFrame {
 
     public VentanaTienda() {
 
-        Color colorFondo = new Color(245, 245, 245); // gris claro
-        Color colorPrimario = new Color(30, 144, 255); // azul deusto
-        Color colorTexto = new Color(40, 40, 40);
+        Color colorFondo = Color.WHITE;
+        Color colorPrimario = new Color(0, 35, 102); // Navy Blue
+        Color colorTexto = new Color(0, 35, 102);
 
         Productos[] productos = BD.obtenerProductos();
 
@@ -59,7 +59,7 @@ public class VentanaTienda extends JFrame {
         tablaProductos.setRowHeight(35);
         tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 13)); // Fuente guay, cambiable a gusto
         tablaProductos.setShowGrid(true);
-        tablaProductos.setGridColor(Color.BLACK);
+        tablaProductos.setGridColor(Color.LIGHT_GRAY);
 
         JTableHeader headerTabla = tablaProductos.getTableHeader();
         headerTabla.setBackground(colorPrimario);
